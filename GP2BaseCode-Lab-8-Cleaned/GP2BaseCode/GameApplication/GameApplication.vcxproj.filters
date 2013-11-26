@@ -45,6 +45,9 @@
     <ClInclude Include="EffectComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApplication.cpp">
@@ -61,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="VisualComponent.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

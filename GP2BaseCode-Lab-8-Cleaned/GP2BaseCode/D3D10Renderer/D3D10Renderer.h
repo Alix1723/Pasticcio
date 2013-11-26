@@ -37,6 +37,18 @@ public:
 	ID3D10InputLayout * createVertexLayout(ID3D10Effect * pEffect);
 
 	void addToRenderQueue(GameObject *pObject);
+
+	//Setting Matrices
+	void setViewMatrix(XMMATRIX * sView)
+	{
+		m_pViewMatrix = *sView;//
+	};
+
+	void setProjectionMatrix(XMMATRIX * sProj)
+	{
+		m_pProjectionMatrix = *sProj;//
+	};
+
 private:
 	bool createDevice(HWND pWindowHandle,int windowWidth, int windowHeight,
 bool fullScreen);
@@ -49,6 +61,10 @@ private:
 	ID3D10RenderTargetView * m_pRenderTargetView;
 	ID3D10DepthStencilView * m_pDepthStencelView;
 	ID3D10Texture2D *m_pDepthStencilTexture;
+
+	//Camera matrices
+	XMMATRIX m_pViewMatrix;
+	XMMATRIX m_pProjectionMatrix;
 
 	//Vertex Layout
 	ID3D10InputLayout*      m_pDefaultVertexLayout;

@@ -129,6 +129,12 @@ void CGameApplication::run()
 //Render, called to draw one frame of the game
 void CGameApplication::render()
 {
+//	mainCamera->getProjection
+	//FIX FOR FRIDAY
+	D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
+	pRenderer->setProjectionMatrix(mainCamera->getProjection());
+	pRenderer->setViewMatrix(mainCamera->getView());
+
 	for(GameObjectIter iter=m_GameObjectList.begin();iter!=m_GameObjectList.end();++iter)
 	{
 		m_pRenderer->addToRenderQueue((*iter));
@@ -166,3 +172,8 @@ void CGameApplication::clearObjectList()
 	}
 }
 
+//Set the current main camera
+void CGameApplication::setMainCamera(CameraComponent* sCamera)
+{
+	mainCamera = sCamera;
+}
