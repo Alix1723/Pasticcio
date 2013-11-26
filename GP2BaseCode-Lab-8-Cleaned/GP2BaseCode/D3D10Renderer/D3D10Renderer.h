@@ -35,6 +35,7 @@ public:
 	ID3D10Buffer * createVertexBuffer(int size,Vertex *pVerts);
 	ID3D10Buffer * createIndexBuffer(int size,int *pIndices);
 	ID3D10InputLayout * createVertexLayout(ID3D10Effect * pEffect);
+	ID3D10ShaderResourceView * loadTexture(string fileName);
 
 	void addToRenderQueue(GameObject *pObject);
 private:

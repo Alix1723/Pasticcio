@@ -289,6 +289,18 @@ void D3D10Renderer::render()
 					pCurrentTechnique=pMaterial->getCurrentTechnique();
 				}
 				//Retrieve & send material stuff
+				if (pMaterial->getDiffuseTexture())
+				{					
+					// CHECK NAME INSIDE THE EFFECT!!!
+					ID3D10EffectShaderResourceVariable * pDiffuseTextureVariable = pCurrentEffect->GetVariableByName("diffuseMaterial")->AsShaderResource();
+					pDiffuseTextureVariable->SetResource(pMaterial->getDiffuseTexture());
+				}
+				if (pMaterial->getSpecularTexture())
+				{
+					// CHECK NAME INSIDE THE EFFECT!!!
+					ID3D10EffectShaderResourceVariable * pSpecularTextureVariable = pCurrentEffect->GetVariableByName("specularMaterial")->AsShaderResource();
+					pSpecularTextureVariable->SetResource(pMaterial->getSpecularTexture());
+				}
 			}
 
 			ID3D10EffectMatrixVariable * pWorldMatrixVar=pCurrentEffect->GetVariableByName("matWorld")->AsMatrix();
