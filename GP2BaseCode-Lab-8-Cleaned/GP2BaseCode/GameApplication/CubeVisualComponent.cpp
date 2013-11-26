@@ -4,16 +4,38 @@
 
 bool CubeVisualComponent::create(IRenderer * pRenderer)
 {
-	m_iNoVerts=4;
-	Vertex verts[4];
-	verts[0].position=XMFLOAT3(-0.5f,-0.5f,0.0f);
-	verts[1].position=XMFLOAT3(-0.5f,0.5f,0.0f);
-	verts[2].position=XMFLOAT3(0.5f,-0.5f,0.0f);
-	verts[3].position=XMFLOAT3(0.5f,0.5f,0.0f);
+	m_iNoVerts=8;
+	Vertex verts[8] = {														// cube			
+	//	  pos		x, 	    y,     z 		tex coord  x   y			normals:  x		 y		z
+		{XMFLOAT3(-1.0f, -1.0f,  1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f,  0.5f,  0.5f)},	// front face 
+		{XMFLOAT3(-1.0f,  1.0f,  1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f,  0.5f,  0.5f)},	// 
+		{XMFLOAT3( 1.0f, -1.0f,  1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f,  0.5f)},	// 
+		{XMFLOAT3( 1.0f,  1.0f,  1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f,  0.5f)},	//
 
+		{XMFLOAT3(-1.0f, -1.0f, -1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f,  0.5f, -0.5f)},	// back face
+		{XMFLOAT3(-1.0f,  1.0f, -1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f,  0.5f, -0.5f)},	// 
+		{XMFLOAT3( 1.0f, -1.0f, -1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f, -0.5f)},	// 
+		{XMFLOAT3( 1.0f,  1.0f, -1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f, -0.5f)}	// 
+	};
 
-	int indices[]={0,1,2,1,3,2};
-	m_iNoIndices=6;
+	int indices[36] = {0, 1, 2, // front face
+					  1, 2, 3,
+
+					  4, 5, 6,	// back face
+					  5, 6, 7,
+
+					  4, 5, 0,	// left face
+					  5, 0, 1,
+
+					  2, 3, 6,	// right face
+					  3, 6, 7,
+
+					  1, 5, 3,	// top face
+					  5, 3, 7,
+
+					  0, 4, 2,	// bottom face
+					  4, 2, 6};
+	m_iNoIndices = 36;
 
 	D3D10Renderer *pD3D10Renderer=static_cast<D3D10Renderer*>(pRenderer);
 
