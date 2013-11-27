@@ -10,10 +10,10 @@ struct Vertex
 	XMFLOAT2 textureCoords;
 	XMFLOAT3 normal;
 	
-	Vertex()
+	/*Vertex()
 	{
 		position=XMFLOAT3(0.0f,0.0f,0.0f);
 		normal=XMFLOAT3(0.0f,0.0f,0.0f);
 		textureCoords=XMFLOAT2(0.0f,0.0f);
-	};
+	};*/
 };
