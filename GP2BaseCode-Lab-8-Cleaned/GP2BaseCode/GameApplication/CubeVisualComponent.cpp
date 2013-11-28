@@ -7,15 +7,15 @@ bool CubeVisualComponent::create(IRenderer * pRenderer)
 	m_iNoVerts=8;
 	Vertex verts[8] = {														// cube			
 	//	  pos		x, 	    y,     z 		tex coord  x   y			normals:  x		 y		z
-		{XMFLOAT3(-1.0f, -1.0f,  1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f,  0.5f,  0.5f)},	// front face 
+		{XMFLOAT3(-1.0f, -1.0f,  1.0f),		XMFLOAT2(0.0f, 1.0f),		XMFLOAT3(0.0f,  0.5f,  0.5f)},	// front face 
 		{XMFLOAT3(-1.0f,  1.0f,  1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f,  0.5f,  0.5f)},	// 
-		{XMFLOAT3( 1.0f, -1.0f,  1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f,  0.5f)},	// 
-		{XMFLOAT3( 1.0f,  1.0f,  1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f,  0.5f)},	//
+		{XMFLOAT3( 1.0f, -1.0f,  1.0f),		XMFLOAT2(1.0f, 1.0f),		XMFLOAT3(0.0f, -0.5f,  0.5f)},	// 
+		{XMFLOAT3( 1.0f,  1.0f,  1.0f),		XMFLOAT2(1.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f,  0.5f)},	//
 
-		{XMFLOAT3(-1.0f, -1.0f, -1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f,  0.5f, -0.5f)},	// back face
+		{XMFLOAT3(-1.0f, -1.0f, -1.0f),		XMFLOAT2(0.0f, 1.0f),		XMFLOAT3(0.0f,  0.5f, -0.5f)},	// back face
 		{XMFLOAT3(-1.0f,  1.0f, -1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f,  0.5f, -0.5f)},	// 
-		{XMFLOAT3( 1.0f, -1.0f, -1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f, -0.5f)},	// 
-		{XMFLOAT3( 1.0f,  1.0f, -1.0f),		XMFLOAT2(0.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f, -0.5f)}	// 
+		{XMFLOAT3( 1.0f, -1.0f, -1.0f),		XMFLOAT2(1.0f, 1.0f),		XMFLOAT3(0.0f, -0.5f, -0.5f)},	// 
+		{XMFLOAT3( 1.0f,  1.0f, -1.0f),		XMFLOAT2(1.0f, 0.0f),		XMFLOAT3(0.0f, -0.5f, -0.5f)}	// 
 	};
 
 	int indices[36] = {0, 1, 2, // front face

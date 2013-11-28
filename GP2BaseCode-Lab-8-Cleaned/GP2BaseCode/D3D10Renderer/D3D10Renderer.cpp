@@ -289,16 +289,16 @@ void D3D10Renderer::render()
 					pCurrentTechnique=pMaterial->getCurrentTechnique();
 				}
 				//Retrieve & send material stuff
-				if (pMaterial->getDiffuseTexture())
+				if (pMaterial->getDiffuseTexture()) 
 				{					
 					// CHECK NAME INSIDE THE EFFECT!!!
-					ID3D10EffectShaderResourceVariable * pDiffuseTextureVariable = pCurrentEffect->GetVariableByName("diffuseMaterial")->AsShaderResource();
+					ID3D10EffectShaderResourceVariable * pDiffuseTextureVariable = pCurrentEffect->GetVariableByName("diffuseTexture")->AsShaderResource();
 					pDiffuseTextureVariable->SetResource(pMaterial->getDiffuseTexture());
 				}
 				if (pMaterial->getSpecularTexture())
 				{
 					// CHECK NAME INSIDE THE EFFECT!!!
-					ID3D10EffectShaderResourceVariable * pSpecularTextureVariable = pCurrentEffect->GetVariableByName("specularMaterial")->AsShaderResource();
+					ID3D10EffectShaderResourceVariable * pSpecularTextureVariable = pCurrentEffect->GetVariableByName("specularTexture")->AsShaderResource();
 					pSpecularTextureVariable->SetResource(pMaterial->getSpecularTexture());
 				}
 			}
@@ -505,4 +505,24 @@ ID3D10InputLayout * D3D10Renderer::createVertexLayout(ID3D10Effect * pEffect)
 void D3D10Renderer::addToRenderQueue(GameObject *pObject)
 {
 	m_RenderQueue.push(pObject);
+}
+
+ID3D10ShaderResourceView* D3D10Renderer::loadTexture(const string& fileName)
+{
+	ID3D10ShaderResourceView* pBaseTextureMap = NULL;
+
+	std::wstring stemp = std::wstring(fileName.begin(), fileName.end());
+	LPCWSTR sw = stemp.c_str();
+
+	if(FAILED(D3DX10CreateShaderResourceViewFromFile(                // D3DX10: x - extended library
+                m_pD3D10Device,
+                sw,
+                NULL,
+                NULL,
+                &pBaseTextureMap,
+                NULL))){
+
+                return NULL;
+        }
+        return pBaseTextureMap;
 }

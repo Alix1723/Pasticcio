@@ -6,7 +6,8 @@ bool MyGame::initGame()
 	pCube->create(m_pRenderer);
 	
 	Material *pMaterial=new Material();
-	pMaterial->loadEffect("Effects/Transform.fx",m_pRenderer);
+	pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
+	pMaterial->loadDiffuseTexture("textures/armoredrecon_diffuse.png", m_pRenderer);
 
 	GameObject *pTestObj=new GameObject();
 	pTestObj->setName("TestObject");
