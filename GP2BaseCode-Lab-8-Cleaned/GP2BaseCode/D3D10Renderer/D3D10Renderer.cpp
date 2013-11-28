@@ -232,6 +232,12 @@ void D3D10Renderer::render()
 	XMMATRIX projection=XMMatrixPerspectiveFovLH(XM_PI/4,800.0f/640.0f,0.1f,100.0f);
 	XMMATRIX world=XMMatrixIdentity();
 
+	//LightComponent vars
+	XMFLOAT3 LightDirection=XMFLOAT3(0.0f,0.0f,0.0f);
+	XMCOLOR DiffuseColour = XMCOLOR(0.0f,0.0f,0.0f,1.0f);
+	XMCOLOR SpecularColour = XMCOLOR(0.0f,0.0f,0.0f,1.0f);
+
+
 	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
 	
 
@@ -273,6 +279,9 @@ void D3D10Renderer::render()
 				}
 			}
 
+
+
+
 			m_pD3D10Device->IASetInputLayout(pCurrentLayout);
 
 
@@ -289,6 +298,38 @@ void D3D10Renderer::render()
 					pCurrentTechnique=pMaterial->getCurrentTechnique();
 				}
 				//Retrieve & send material stuff
+			}
+
+			
+			DirectionalLightComponent *pDirectionalLightComponent=static_cast<DirectionalLightComponent *>(pObject->getComponent("DirectionalLight"));
+			if(pDirectionalLightComponent)
+			{
+				//retrieve vars from effect - Check all names of the vars when testing
+				ID3D10EffectVectorVariable * pDiffuseColourVar=pCurrentEffect->GetVariableByName("DiffuseLightColour")->AsVector();
+				ID3D10EffectVectorVariable * pSpecularColourVar=pCurrentEffect->GetVariableByName("SpecularLightColour")->AsVector();
+				ID3D10EffectVectorVariable * pDirectionVar=pCurrentEffect->GetVariableByName("LightDirection")->AsVector();
+				
+				//get values from component
+				DiffuseColour=pDirectionalLightComponent->getDiffuse();
+				SpecularColour=pDirectionalLightComponent->getSpecular();
+				LightDirection=pDirectionalLightComponent->getDirection();
+				
+				//set values
+				pDiffuseColourVar->SetFloatVector((float*)&DiffuseColour);
+				pSpecularColourVar->SetFloatVector((float*)&SpecularColour);
+				pDirectionVar->SetFloatVector((float*)&LightDirection);
+
+				//if(pDirectionalLightComponent->getDiffuse())
+				//{
+				//	pDiffuseColour=pDirectionalLightComponent->getDiffuse();
+				//}
+				//if(pDirectionalLightComponent->getSpecular())
+				//{
+				//	pSpecularColour=pDirectionalLightComponent->getSpecular();
+				//}
+				//
+				//	pDirection=pDirectionalLightComponent->getDirection();
+				//
 			}
 
 			ID3D10EffectMatrixVariable * pWorldMatrixVar=pCurrentEffect->GetVariableByName("matWorld")->AsMatrix();
