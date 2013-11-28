@@ -90,6 +90,21 @@ bool CGameApplication::initGraphics()
 	if (!m_pRenderer->init(m_pWindow->getHandleToWindow(),m_GameOptionDesc.fullscreen))
 		return false;
 
+	// Initialize a camera
+	CameraComponent *pCam=new CameraComponent();
+	pCam->setAspectRatio(16/9);
+	pCam->setFOV(90);
+	pCam->setLook(0,0,0);
+	pCam->setNearClip(0.01f);
+	pCam->setFarClip(100.0f);
+	pCam->setUp(0.0f,1.0f,0.0f);
+	//pCam->Update();
+
+	GameObject *pCameraObj=new GameObject();
+	pCameraObj->setName("Camera");
+	pCameraObj->addComponent(pCam);
+	//pCam->Update();
+	
 	return true;
 }
 
@@ -132,8 +147,8 @@ void CGameApplication::render()
 //	mainCamera->getProjection
 	//FIX FOR FRIDAY
 	D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
-	pRenderer->setProjectionMatrix(mainCamera->getProjection());
-	pRenderer->setViewMatrix(mainCamera->getView());
+	pRenderer->setProjectionMatrix(&mainCamera->getProjection());
+	pRenderer->setViewMatrix(&mainCamera->getView());
 
 	for(GameObjectIter iter=m_GameObjectList.begin();iter!=m_GameObjectList.end();++iter)
 	{
