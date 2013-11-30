@@ -16,7 +16,7 @@ bool MyGame::initGame()
 
 	pCube->createVertexLayout(m_pRenderer);
 	
-	pTestObj->getTransfrom().setPosition(0.5f,1.0f,1.0f);
+	pTestObj->getTransfrom().setPosition(3.0f,0.0f,5.0f);
 
 	m_GameObjectList.push_back(pTestObj);
 
