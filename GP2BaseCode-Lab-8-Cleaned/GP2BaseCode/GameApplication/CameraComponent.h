@@ -27,7 +27,6 @@ private:
 	XMMATRIX m_Projection;	//Projection matrix
 	XMMATRIX m_View;		//View matrix
 
-
 	//Methods
 public:
 	//Setters

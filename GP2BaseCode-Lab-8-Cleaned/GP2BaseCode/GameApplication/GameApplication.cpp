@@ -85,22 +85,24 @@ bool CGameApplication::initPhysics()
 //initGraphics - initialise the graphics subsystem
 bool CGameApplication::initGraphics()
 {
+	// Initialize a camera
+	CameraComponent *pCam=new CameraComponent();
+	pCam->setLook(0,0,1);
+
+	//Add it to a camera gameobject;
+	GameObject *pCameraObj=new GameObject();
+	pCameraObj->setName("Camera");
+	pCameraObj->addComponent(pCam);
+	
+	pCam->setOwner(pCameraObj);	//Important to set owner!
+	pCameraObj->getTransfrom().setPosition(0,0,-1);
+
+	setMainCamera(pCam);
+
 	//check our settings first, to see what graphics mode we are in
 	m_pRenderer=new D3D10Renderer();
 	if (!m_pRenderer->init(m_pWindow->getHandleToWindow(),m_GameOptionDesc.fullscreen))
 		return false;
-
-	// Initialize a camera
-	CameraComponent *pCam=new CameraComponent();
-	pCam->setLook(0,0,0);
-
-	//pCam->Update();
-
-	GameObject *pCameraObj=new GameObject();
-	pCameraObj->setName("Camera");
-	pCameraObj->addComponent(pCam);
-	//pCam->Update();
-	
 	return true;
 }
 
@@ -112,8 +114,6 @@ bool CGameApplication::initWindow()
 	m_pWindow->init(m_GameOptionDesc.gameName,m_GameOptionDesc.width,m_GameOptionDesc.height,m_GameOptionDesc.fullscreen);
 	return true;
 }
-
-
 
 //called to init the game
 bool CGameApplication::initGame()
