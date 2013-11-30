@@ -1,5 +1,14 @@
 #include "CameraComponent.h"
 
+//Default values on creation
+CameraComponent::CameraComponent(){
+	m_FOV = 70;
+	m_LookAt = XMFLOAT3(0.0f,0.0f,0.0f);
+	m_Up = XMFLOAT3(0.0f,1.0f,0.0f);
+	m_NearClip = 0.01f;
+	m_FarClip = 1000.0f;
+};
+
 void CameraComponent::Update()
 {
 	//Get the parent game object's transform

@@ -13,7 +13,7 @@ class CameraComponent : public GameComponent
 {
 public:
 	//Constructor/destructor
-	CameraComponent(){};
+	CameraComponent();
 	virtual ~CameraComponent(){}; //Overrides from parent
 
 	//Member variables

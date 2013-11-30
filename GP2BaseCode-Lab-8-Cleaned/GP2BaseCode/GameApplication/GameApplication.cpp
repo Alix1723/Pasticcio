@@ -92,12 +92,8 @@ bool CGameApplication::initGraphics()
 
 	// Initialize a camera
 	CameraComponent *pCam=new CameraComponent();
-	pCam->setAspectRatio(16/9);
-	pCam->setFOV(90);
 	pCam->setLook(0,0,0);
-	pCam->setNearClip(0.01f);
-	pCam->setFarClip(100.0f);
-	pCam->setUp(0.0f,1.0f,0.0f);
+
 	//pCam->Update();
 
 	GameObject *pCameraObj=new GameObject();
