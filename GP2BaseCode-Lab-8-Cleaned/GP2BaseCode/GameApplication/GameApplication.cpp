@@ -85,20 +85,6 @@ bool CGameApplication::initPhysics()
 //initGraphics - initialise the graphics subsystem
 bool CGameApplication::initGraphics()
 {
-	// Initialize a camera
-	CameraComponent *pCam=new CameraComponent();
-	pCam->setLook(0,0,1);
-
-	//Add it to a camera gameobject;
-	GameObject *pCameraObj=new GameObject();
-	pCameraObj->setName("Camera");
-	pCameraObj->addComponent(pCam);
-	
-	pCam->setOwner(pCameraObj);	//Important to set owner!
-	pCameraObj->getTransfrom().setPosition(0,0,-1);
-
-	setMainCamera(pCam);
-
 	//check our settings first, to see what graphics mode we are in
 	m_pRenderer=new D3D10Renderer();
 	if (!m_pRenderer->init(m_pWindow->getHandleToWindow(),m_GameOptionDesc.fullscreen))
@@ -140,11 +126,12 @@ void CGameApplication::run()
 //Render, called to draw one frame of the game
 void CGameApplication::render()
 {
-//	mainCamera->getProjection
-	//FIX FOR FRIDAY
-	D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
-	pRenderer->setProjectionMatrix(&mainCamera->getProjection());
-	pRenderer->setViewMatrix(&mainCamera->getView());
+
+	if(mainCamera){
+		D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
+		pRenderer->setProjectionMatrix(&mainCamera->getProjection());
+		pRenderer->setViewMatrix(&mainCamera->getView());
+	}
 
 	for(GameObjectIter iter=m_GameObjectList.begin();iter!=m_GameObjectList.end();++iter)
 	{
