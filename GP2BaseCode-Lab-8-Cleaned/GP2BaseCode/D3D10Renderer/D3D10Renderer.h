@@ -12,9 +12,11 @@
 #define _XM_NO_INTRINSICS_
 #include <xnamath.h>
 #include <queue>
+#include <string>
 
 #include "Vertex.h"
 
+using namespace std;
 
 //D3D10Renderer implements the Renderer interface
 class D3D10Renderer:public IRenderer
@@ -35,6 +37,7 @@ public:
 	ID3D10Buffer * createVertexBuffer(int size,Vertex *pVerts);
 	ID3D10Buffer * createIndexBuffer(int size,int *pIndices);
 	ID3D10InputLayout * createVertexLayout(ID3D10Effect * pEffect);
+	ID3D10ShaderResourceView * loadTexture(const string& fileName);
 
 	void addToRenderQueue(GameObject *pObject);
 
