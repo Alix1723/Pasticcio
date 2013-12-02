@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameComponent.h"
-#define XM_NO_INSTRINSICS
+#define _XM_NO_INSTRINSICS_
 #include <xnamath.h>
 
 class LightComponent:public GameComponent
@@ -13,7 +13,7 @@ public:
 		m_DiffuseColour=XMCOLOR(0.0f,0.0f,0.0f,1.0f);
 		m_SpecularColour=XMCOLOR(0.0f,0.0f,0.0f,1.0f);
 	};
-	~LightComponent()
+	virtual ~LightComponent()
 	{
 	};
 
@@ -29,4 +29,4 @@ private:
 	XMCOLOR m_DiffuseColour;
 	XMCOLOR m_SpecularColour;
 
-}
+};

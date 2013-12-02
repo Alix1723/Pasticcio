@@ -319,17 +319,6 @@ void D3D10Renderer::render()
 				pSpecularColourVar->SetFloatVector((float*)&SpecularColour);
 				pDirectionVar->SetFloatVector((float*)&LightDirection);
 
-				//if(pDirectionalLightComponent->getDiffuse())
-				//{
-				//	pDiffuseColour=pDirectionalLightComponent->getDiffuse();
-				//}
-				//if(pDirectionalLightComponent->getSpecular())
-				//{
-				//	pSpecularColour=pDirectionalLightComponent->getSpecular();
-				//}
-				//
-				//	pDirection=pDirectionalLightComponent->getDirection();
-				//
 			}
 
 			ID3D10EffectMatrixVariable * pWorldMatrixVar=pCurrentEffect->GetVariableByName("matWorld")->AsMatrix();
@@ -534,4 +523,9 @@ ID3D10InputLayout * D3D10Renderer::createVertexLayout(ID3D10Effect * pEffect)
 void D3D10Renderer::addToRenderQueue(GameObject *pObject)
 {
 	m_RenderQueue.push(pObject);
+}
+
+void D3D10Renderer::setAmbientLightColour(float r, float g , float b, float a)
+{
+	m_pAmbientLight = XMCOLOR(r,g,b,a);
 }

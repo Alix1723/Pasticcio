@@ -36,6 +36,7 @@ public:
 	ID3D10Buffer * createIndexBuffer(int size,int *pIndices);
 	ID3D10InputLayout * createVertexLayout(ID3D10Effect * pEffect);
 
+	void setAmbientLightColour(float r, float g, float b, float a);
 	void addToRenderQueue(GameObject *pObject);
 private:
 	bool createDevice(HWND pWindowHandle,int windowWidth, int windowHeight,
@@ -55,6 +56,9 @@ private:
 	//this will be used if we have no Effect
 	ID3D10Effect * m_pDefaultEffect;
 	ID3D10EffectTechnique * m_pDefaultTechnique;
+
+	//Ambient Colour
+	XMCOLOR  m_pAmbientLight;
 
 	RenderQueue m_RenderQueue;
 };
