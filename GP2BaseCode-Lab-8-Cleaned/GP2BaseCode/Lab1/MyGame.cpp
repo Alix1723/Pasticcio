@@ -31,7 +31,7 @@ bool MyGame::initGame()
 	pCameraObj->addComponent(pCam);
 	setMainCamera(pCam);
 
-	pCameraObj->getTransfrom().setPosition(0.0f,0.0f,-10.0f);
+	pCameraObj->getTransfrom().setPosition(-1.5f,0.0f,-2.0f);
 	pCam->Update();
 
 	m_GameObjectList.push_back(pCameraObj);
