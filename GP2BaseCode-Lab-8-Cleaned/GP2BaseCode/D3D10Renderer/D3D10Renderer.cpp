@@ -324,6 +324,8 @@ void D3D10Renderer::render()
 			ID3D10EffectMatrixVariable * pWorldMatrixVar=pCurrentEffect->GetVariableByName("matWorld")->AsMatrix();
 			ID3D10EffectMatrixVariable * pViewMatrixVar=pCurrentEffect->GetVariableByName("matView")->AsMatrix();
 			ID3D10EffectMatrixVariable * pProjectionMatrixVar=pCurrentEffect->GetVariableByName("matProjection")->AsMatrix();
+			ID3D10EffectVectorVariable * pAmbientLightColourVar=pCurrentEffect->GetVariableByName("ambientLightColour")->AsVector();
+
 
 			if (pWorldMatrixVar)
 			{
@@ -336,6 +338,10 @@ void D3D10Renderer::render()
 			if (pProjectionMatrixVar)
 			{
 				pProjectionMatrixVar->SetMatrix((float*)&projection);
+			}
+			if (pAmbientLightColourVar)
+			{
+				pAmbientLightColourVar->SetFloatVector((float*)&m_pAmbientLight);
 			}
 
 			D3D10_TECHNIQUE_DESC techniqueDesc;
