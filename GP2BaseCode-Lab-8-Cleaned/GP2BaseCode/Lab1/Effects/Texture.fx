@@ -5,14 +5,14 @@ float4x4 matProjection:PROJECTION;
 struct VS_INPUT
 {
 	float4 pos:POSITION;
-	float4 colour:COLOR;
+	//float4 colour:COLOR;
 	float2 texCoord:TEXCOORD0;
 };
 
 struct PS_INPUT
 {
 	float4 pos:SV_POSITION;
-	float4 colour:COLOR;
+	//float4 colour:COLOR;
 	float2 texCoord:TEXCOORD0;
 };
 
@@ -24,7 +24,7 @@ PS_INPUT VS(VS_INPUT input)
 	float4x4 matWorldViewProjection=mul(matWorld,matViewProjection);
 	
 	output.pos=mul(input.pos,matWorldViewProjection);
-	output.colour=input.colour;
+	//output.colour=input.colour;
 	output.texCoord=input.texCoord;
 	return output;
 }

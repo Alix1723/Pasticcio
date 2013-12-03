@@ -298,6 +298,18 @@ void D3D10Renderer::render()
 					pCurrentTechnique=pMaterial->getCurrentTechnique();
 				}
 				//Retrieve & send material stuff
+				if (pMaterial->getDiffuseTexture()) 
+				{					
+					// CHECK NAME INSIDE THE EFFECT!!!
+					ID3D10EffectShaderResourceVariable * pDiffuseTextureVariable = pCurrentEffect->GetVariableByName("diffuseTexture")->AsShaderResource();
+					pDiffuseTextureVariable->SetResource(pMaterial->getDiffuseTexture());
+				}
+				if (pMaterial->getSpecularTexture())
+				{
+					// CHECK NAME INSIDE THE EFFECT!!!
+					ID3D10EffectShaderResourceVariable * pSpecularTextureVariable = pCurrentEffect->GetVariableByName("specularTexture")->AsShaderResource();
+					pSpecularTextureVariable->SetResource(pMaterial->getSpecularTexture());
+				}
 			}
 
 			
@@ -525,7 +537,28 @@ void D3D10Renderer::addToRenderQueue(GameObject *pObject)
 	m_RenderQueue.push(pObject);
 }
 
+<<<<<<< HEAD
 void D3D10Renderer::setAmbientLightColour(float r, float g , float b, float a)
 {
 	m_pAmbientLight = XMCOLOR(r,g,b,a);
+=======
+ID3D10ShaderResourceView* D3D10Renderer::loadTexture(const string& fileName)
+{
+	ID3D10ShaderResourceView* pBaseTextureMap = NULL;
+
+	std::wstring stemp = std::wstring(fileName.begin(), fileName.end());
+	LPCWSTR sw = stemp.c_str();
+
+	if(FAILED(D3DX10CreateShaderResourceViewFromFile(                // D3DX10: x - extended library
+                m_pD3D10Device,
+                sw,
+                NULL,
+                NULL,
+                &pBaseTextureMap,
+                NULL))){
+
+                return NULL;
+        }
+        return pBaseTextureMap;
+>>>>>>> origin/Cwork-Lab8-Pascal
 }
