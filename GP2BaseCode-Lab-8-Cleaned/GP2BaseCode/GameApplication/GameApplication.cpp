@@ -129,8 +129,8 @@ void CGameApplication::render()
 
 	if(mainCamera){
 		D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
-		pRenderer->setProjectionMatrix(&mainCamera->getProjection());
-		pRenderer->setViewMatrix(&mainCamera->getView());
+		pRenderer->setProjectionMatrix(mainCamera->getProjection());
+		pRenderer->setViewMatrix(mainCamera->getView());
 	}
 
 	for(GameObjectIter iter=m_GameObjectList.begin();iter!=m_GameObjectList.end();++iter)
@@ -168,10 +168,4 @@ void CGameApplication::clearObjectList()
 			++iter;
 		}
 	}
-}
-
-//Set the current main camera
-void CGameApplication::setMainCamera(CameraComponent* sCamera)
-{
-	mainCamera = sCamera;
 }

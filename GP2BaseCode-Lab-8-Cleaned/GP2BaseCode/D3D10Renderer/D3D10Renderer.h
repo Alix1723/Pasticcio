@@ -39,14 +39,14 @@ public:
 	void addToRenderQueue(GameObject *pObject);
 
 	//Setting Matrices
-	void setViewMatrix(XMMATRIX * sView)
+	void setViewMatrix(XMMATRIX& sView)
 	{
-		m_pViewMatrix = *sView;//
+		m_pViewMatrix = sView;//
 	};
 
-	void setProjectionMatrix(XMMATRIX * sProj)
+	void setProjectionMatrix(XMMATRIX& sProj)
 	{
-		m_pProjectionMatrix = *sProj;//
+		m_pProjectionMatrix = sProj;
 	};
 
 private:
