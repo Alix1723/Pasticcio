@@ -6,8 +6,8 @@ bool MyGame::initGame()
 	pCube->create(m_pRenderer);
 	
 	Material *pMaterial=new Material();
-	pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
-	pMaterial->loadDiffuseTexture("textures/armoredrecon_diffuse.png", m_pRenderer);
+	pMaterial->loadEffect("Effects/SpecularPeter.fx",m_pRenderer);
+	//pMaterial->loadDiffuseTexture("textures/armoredrecon_diffuse.png", m_pRenderer);
 
 	GameObject *pTestObj=new GameObject();
 	pTestObj->setName("TestObject");
@@ -22,12 +22,12 @@ bool MyGame::initGame()
 
 	pCube->createVertexLayout(m_pRenderer);
 	
-<<<<<<< HEAD
-	pTestObj->getTransfrom().setPosition(0.5f,1.0f,1.0f);
-	m_pRenderer->setAmbientLightColour(0.0f,0.0f,0.0f,0.0f);
-=======
-	pTestObj->getTransfrom().setPosition(3.0f,0.0f,5.0f);
->>>>>>> origin/Cwork-Lab8-Pascal
+
+	
+	m_pRenderer->setAmbientLightColour(0.825f,0.528f,1.0f,1.0f);
+
+	pTestObj->getTransfrom().setPosition(1.0f,0.0f,0.0f);
+
 
 	m_GameObjectList.push_back(pTestObj);
 

@@ -301,13 +301,13 @@ void D3D10Renderer::render()
 				if (pMaterial->getDiffuseTexture()) 
 				{					
 					// CHECK NAME INSIDE THE EFFECT!!!
-					ID3D10EffectShaderResourceVariable * pDiffuseTextureVariable = pCurrentEffect->GetVariableByName("diffuseTexture")->AsShaderResource();
+					ID3D10EffectShaderResourceVariable * pDiffuseTextureVariable = pCurrentEffect->GetVariableByName("diffuseMaterial")->AsShaderResource();
 					pDiffuseTextureVariable->SetResource(pMaterial->getDiffuseTexture());
 				}
 				if (pMaterial->getSpecularTexture())
 				{
 					// CHECK NAME INSIDE THE EFFECT!!!
-					ID3D10EffectShaderResourceVariable * pSpecularTextureVariable = pCurrentEffect->GetVariableByName("specularTexture")->AsShaderResource();
+					ID3D10EffectShaderResourceVariable * pSpecularTextureVariable = pCurrentEffect->GetVariableByName("specularMaterial")->AsShaderResource();
 					pSpecularTextureVariable->SetResource(pMaterial->getSpecularTexture());
 				}
 			}
@@ -317,9 +317,10 @@ void D3D10Renderer::render()
 			if(pDirectionalLightComponent)
 			{
 				//retrieve vars from effect - Check all names of the vars when testing
-				ID3D10EffectVectorVariable * pDiffuseColourVar=pCurrentEffect->GetVariableByName("DiffuseLightColour")->AsVector();
-				ID3D10EffectVectorVariable * pSpecularColourVar=pCurrentEffect->GetVariableByName("SpecularLightColour")->AsVector();
-				ID3D10EffectVectorVariable * pDirectionVar=pCurrentEffect->GetVariableByName("LightDirection")->AsVector();
+				ID3D10EffectVectorVariable * pDiffuseColourVar=pCurrentEffect->GetVariableByName("diffuseLightColour")->AsVector();
+				ID3D10EffectVectorVariable * pSpecularColourVar=pCurrentEffect->GetVariableByName("specularLightColour")->AsVector();
+				ID3D10EffectVectorVariable * pDirectionVar=pCurrentEffect->GetVariableByName("lightDirection")->AsVector();
+				
 				
 				//get values from component
 				DiffuseColour=pDirectionalLightComponent->getDiffuse();
@@ -336,6 +337,7 @@ void D3D10Renderer::render()
 			ID3D10EffectMatrixVariable * pWorldMatrixVar=pCurrentEffect->GetVariableByName("matWorld")->AsMatrix();
 			ID3D10EffectMatrixVariable * pViewMatrixVar=pCurrentEffect->GetVariableByName("matView")->AsMatrix();
 			ID3D10EffectMatrixVariable * pProjectionMatrixVar=pCurrentEffect->GetVariableByName("matProjection")->AsMatrix();
+			ID3D10EffectVectorVariable *pAmbientLightColourVar=pCurrentEffect->GetVariableByName("ambientLightColour")->AsVector();
 
 			if (pWorldMatrixVar)
 			{
@@ -349,7 +351,10 @@ void D3D10Renderer::render()
 			{
 				pProjectionMatrixVar->SetMatrix((float*)&projection);
 			}
-
+			if (pAmbientLightColourVar)
+            {
+                pAmbientLightColourVar->SetFloatVector((float*)&m_pAmbientLight);
+			}	
 			D3D10_TECHNIQUE_DESC techniqueDesc;
 			pCurrentTechnique->GetDesc(&techniqueDesc); 
 
@@ -537,11 +542,11 @@ void D3D10Renderer::addToRenderQueue(GameObject *pObject)
 	m_RenderQueue.push(pObject);
 }
 
-<<<<<<< HEAD
+
 void D3D10Renderer::setAmbientLightColour(float r, float g , float b, float a)
 {
 	m_pAmbientLight = XMCOLOR(r,g,b,a);
-=======
+}
 ID3D10ShaderResourceView* D3D10Renderer::loadTexture(const string& fileName)
 {
 	ID3D10ShaderResourceView* pBaseTextureMap = NULL;
@@ -560,5 +565,5 @@ ID3D10ShaderResourceView* D3D10Renderer::loadTexture(const string& fileName)
                 return NULL;
         }
         return pBaseTextureMap;
->>>>>>> origin/Cwork-Lab8-Pascal
+
 }
