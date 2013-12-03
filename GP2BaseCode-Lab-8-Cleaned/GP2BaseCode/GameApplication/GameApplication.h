@@ -44,7 +44,10 @@ public:
 
 	void clearObjectList();
 
-	void setMainCamera(CameraComponent* sCamera);
+	void setMainCamera(CameraComponent* sCamera)
+	{
+		mainCamera = sCamera;
+	};
 private:
 	bool parseConfigFile();
 	bool initInput();
