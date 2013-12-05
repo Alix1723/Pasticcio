@@ -38,6 +38,8 @@ bool MyGame::initGame()
 	
 	pCameraObj->getTransform().setPosition(0.0f,0.0f,-10.0f);
 
+	FPControllerComponent *pFPControl = new FPControllerComponent();
+	pCameraObj->addComponent(pFPControl);
 
 	m_GameObjectList.push_back(pCameraObj);
 

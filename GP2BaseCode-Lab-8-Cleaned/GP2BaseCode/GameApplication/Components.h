@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Material.h"
 #include "VisualComponent.h"
-#include "CubeVisualComponent.h"
+#include "CubeVisualComponent.h"	
 
 #include "CameraComponent.h" //Alix
+#include "FPControllerComponent.h"
