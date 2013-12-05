@@ -27,7 +27,7 @@ bool MyGame::initGame()
 	
 	// Initialize a camera
 	CameraComponent *pCam=new CameraComponent();
-	pCam->setLook(0.0f,0.0f,0.0f);
+	//pCam->setLook(0.0f,0.0f,0.0f);
 	pCam->setFOV(m_GameOptionDesc.width/m_GameOptionDesc.height);
 
 	//Add it to a camera gameobject;
@@ -37,7 +37,7 @@ bool MyGame::initGame()
 	setMainCamera(pCam);
 	
 	pCameraObj->getTransform().setPosition(0.0f,0.0f,-10.0f);
-
+	pCameraObj->getTransform().setRotation(1.0f,0.0f,1.0f);
 	FPControllerComponent *pFPControl = new FPControllerComponent();
 	pCameraObj->addComponent(pFPControl);
 

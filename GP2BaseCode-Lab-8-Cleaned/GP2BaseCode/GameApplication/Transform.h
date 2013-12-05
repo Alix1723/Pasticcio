@@ -54,6 +54,13 @@ public:
 		m_vecRotation.z=z;
 	};
 
+	void setRotation(XMVECTOR rot)
+	{
+		m_vecRotation.x=rot.x;
+		m_vecRotation.y=rot.y;
+		m_vecRotation.z=rot.z;
+	};
+
 	XMFLOAT3& getRotation()
 	{
 		return m_vecRotation;
@@ -64,6 +71,13 @@ public:
 		m_vecPosition.x=x;
 		m_vecPosition.y=y;
 		m_vecPosition.z=z;
+	};
+
+	void setPosition(XMVECTOR pos)
+	{
+		m_vecPosition.x=pos.x;
+		m_vecPosition.y=pos.y;
+		m_vecPosition.z=pos.z;
 	};
 
 	XMFLOAT3& getPosition()
