@@ -13,5 +13,4 @@ public:
 	virtual void render()=0;
 
 	virtual void addToRenderQueue(GameObject *pObject)=0;
-	//virtual void setAmbientLightColour(float r, float g, float b, float a)=0;
 };

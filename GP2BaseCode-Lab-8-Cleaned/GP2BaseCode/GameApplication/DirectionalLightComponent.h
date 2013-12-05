@@ -8,7 +8,7 @@ public:
 	DirectionalLightComponent()
 	{
 		m_Name="DirectionalLight";
-		m_Direction=XMFLOAT3(0.0f,0.0f,-1.0f);
+		m_Direction=XMFLOAT3(0.0f,0.0f,1.0f);
 	};
 
 	virtual ~DirectionalLightComponent()

@@ -58,7 +58,7 @@ D3D10Renderer::D3D10Renderer()
 	m_pDepthStencilTexture=NULL;
 	m_pDefaultVertexLayout=NULL;
 	m_pDefaultEffect=NULL;
-	setAmbientLightColour(0.5f,0.5f,0.5f,1.0f);
+	setAmbientLightColour(1.0f,0.3f,0.25f,0.0f);
     m_pMainLight=NULL;
 }
 
@@ -234,10 +234,6 @@ void D3D10Renderer::render()
 	XMMATRIX projection=XMMatrixPerspectiveFovLH(XM_PI/4,800.0f/640.0f,0.1f,100.0f);
 	XMMATRIX world=XMMatrixIdentity();
 
-	//LightComponent vars
-	XMFLOAT3 LightDirection=XMFLOAT3(0.0f,0.0f,0.0f);
-	XMCOLOR DiffuseColour = XMCOLOR(0.0f,0.0f,0.0f,1.0f);
-	XMCOLOR SpecularColour = XMCOLOR(0.0f,0.0f,0.0f,1.0f);
 
 
 	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
