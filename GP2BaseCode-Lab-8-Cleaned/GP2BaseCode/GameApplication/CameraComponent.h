@@ -14,14 +14,14 @@ public:
 	CameraComponent()
 	{
 		m_Name="Camera";
-	m_FOV = XM_PI/4;
-	m_LookAt = XMFLOAT3(0.0f,0.0f,0.0f);
-	m_Up = XMFLOAT3(0.0f,1.0f,0.0f);
-	m_NearClip = 0.1f;
-	m_FarClip = 1000.0f;
-	m_View = XMMatrixIdentity();
-	m_Projection = XMMatrixIdentity();
-	m_AspectRatio = 800.0f/640.0f;
+		m_FOV = XM_PI/4;
+		m_LookAt = XMFLOAT3(0.0f,0.0f,0.0f);
+		m_Up = XMFLOAT3(0.0f,1.0f,0.0f);
+		m_NearClip = 0.1f;
+		m_FarClip = 1000.0f;
+		m_View = XMMatrixIdentity();
+		m_Projection = XMMatrixIdentity();
+		m_AspectRatio = 800.0f/640.0f;
 	};
 
 	~CameraComponent(){}; //Overrides from parent

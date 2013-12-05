@@ -46,7 +46,7 @@ public:
 
 	void setMainCamera(CameraComponent* sCamera)
 	{
-		mainCamera = sCamera;
+		m_pMainCamera = sCamera;
 	};
 private:
 	bool parseConfigFile();
@@ -64,7 +64,7 @@ protected:
 	GameOptionsDesc m_GameOptionDesc;
 	wstring m_ConfigFileName;
 	GameObjectList m_GameObjectList;
-	CameraComponent* mainCamera; //Pointer to the current viewable camera
+	CameraComponent* m_pMainCamera; //Pointer to the current viewable camera
 
 	
 };

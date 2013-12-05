@@ -27,6 +27,7 @@ CGameApplication::CGameApplication(void)
 	m_GameOptionDesc.fullscreen=false;
 	//Config options
 	m_ConfigFileName=TEXT("game.cfg");
+	m_pMainCamera = NULL;
 }
 
 //Desconstructor
@@ -127,10 +128,10 @@ void CGameApplication::run()
 void CGameApplication::render()
 {
 
-	if(mainCamera){
+	if(m_pMainCamera){
 		D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
-		pRenderer->setProjectionMatrix(mainCamera->getProjection());
-		pRenderer->setViewMatrix(mainCamera->getView());
+		pRenderer->setProjectionMatrix(m_pMainCamera->getProjection());
+		pRenderer->setViewMatrix(m_pMainCamera->getView());
 	}
 
 	for(GameObjectIter iter=m_GameObjectList.begin();iter!=m_GameObjectList.end();++iter)

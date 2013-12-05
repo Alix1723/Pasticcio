@@ -17,11 +17,11 @@ bool MyGame::initGame()
 
 	pCube->createVertexLayout(m_pRenderer);
 	
-<<<<<<< HEAD
-	pTestObj->getTransfrom().setPosition(3.0f,0.0f,5.0f);
-=======
+
+	pTestObj->getTransfrom().setPosition(0.0f,0.0f,-1.0f);
+
 	//pTestObj->getTransfrom().setPosition(0.5f,1.0f,1.0f);
->>>>>>> origin/Cwork-Lab8-Alix
+
 
 	m_GameObjectList.push_back(pTestObj);
 	
@@ -35,9 +35,9 @@ bool MyGame::initGame()
 	pCameraObj->setName("MainCamera");
 	pCameraObj->addComponent(pCam);
 	setMainCamera(pCam);
-
-	pCameraObj->getTransfrom().setPosition(-1.5f,0.0f,-2.0f);
-	pCam->Update();
+	
+	pCameraObj->getTransfrom().setPosition(0.0f,0.0f,-15.0f);
+	//pCam->Update();
 
 	m_GameObjectList.push_back(pCameraObj);
 
