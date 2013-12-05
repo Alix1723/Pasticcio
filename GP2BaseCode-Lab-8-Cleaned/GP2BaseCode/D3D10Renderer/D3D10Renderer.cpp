@@ -219,28 +219,26 @@ void D3D10Renderer::clear(float r,float g,float b,float a)
 
 void D3D10Renderer::render()
 {
-	int noIndices=0;
-	int noVerts=0;
-	ID3D10Buffer *pIndexBuffer=NULL;
-	ID3D10Buffer *pVertexBuffer=NULL;
-	ID3D10Effect *pCurrentEffect=m_pDefaultEffect;
-	ID3D10EffectTechnique *pCurrentTechnique=m_pDefaultTechnique;
-	ID3D10InputLayout *pCurrentLayout=m_pDefaultVertexLayout;
+	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
 
 	//Main camera handles calculation for View and Projection matrices
-	XMMATRIX world= XMMatrixIdentity();
-
-	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
+	//XMMATRIX world= XMMatrixIdentity(); 
 	
-
 	while(!m_RenderQueue.empty())
 	{
+		int noIndices=0;
+		int noVerts=0;
+		ID3D10Buffer *pIndexBuffer=NULL;
+		ID3D10Buffer *pVertexBuffer=NULL;
+		ID3D10Effect *pCurrentEffect=m_pDefaultEffect;
+		ID3D10EffectTechnique *pCurrentTechnique=m_pDefaultTechnique;
+		ID3D10InputLayout *pCurrentLayout=m_pDefaultVertexLayout;
+
 		GameObject * pObject=m_RenderQueue.front();
 		if(pObject)
 		{
 			//Grab Transform
-			
-			Transform transform=pObject->getTransfrom();
+			Transform transform=pObject->getTransform();
 
 			//Now grab Visual Component
 			VisualComponent *pVisualComponent=static_cast<VisualComponent *>(pObject->getComponent("Visual"));

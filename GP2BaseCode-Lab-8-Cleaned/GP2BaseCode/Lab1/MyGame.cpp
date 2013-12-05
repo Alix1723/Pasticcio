@@ -18,7 +18,7 @@ bool MyGame::initGame()
 	pCube->createVertexLayout(m_pRenderer);
 	
 
-	pTestObj->getTransfrom().setPosition(0.0f,0.0f,-1.0f);
+	pTestObj->getTransform().setPosition(4.0f,1.0f,0.0f);
 
 	//pTestObj->getTransfrom().setPosition(0.5f,1.0f,1.0f);
 
@@ -36,8 +36,8 @@ bool MyGame::initGame()
 	pCameraObj->addComponent(pCam);
 	setMainCamera(pCam);
 	
-	pCameraObj->getTransfrom().setPosition(0.0f,0.0f,-15.0f);
-	//pCam->Update();
+	pCameraObj->getTransform().setPosition(0.0f,0.0f,-10.0f);
+
 
 	m_GameObjectList.push_back(pCameraObj);
 

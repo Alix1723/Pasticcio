@@ -25,7 +25,7 @@ public:
 	};
 
 	~CameraComponent(){}; //Overrides from parent
-	void Update(); 
+	void update(); 
 	//Member variables
 private:
 	XMFLOAT3 m_LookAt;		//Point the camera is looking at (focus)
