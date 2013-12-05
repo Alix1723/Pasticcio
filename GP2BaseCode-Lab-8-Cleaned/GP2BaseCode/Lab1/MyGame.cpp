@@ -11,7 +11,8 @@ bool MyGame::initGame()
 	//pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
 	pMaterial->loadDiffuseTexture("textures/armoredrecon_diffuse.png", m_pRenderer);
 
-	LightComponent *pLightComponent=new LightComponent();
+	//LightComponent *pLightComponent=new LightComponent();
+	//pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
 	
 	GameObject *pTestObj=new GameObject();
 	pTestObj->setName("TestObject");
@@ -23,13 +24,10 @@ bool MyGame::initGame()
 
 	pTestObj->getTransform().setPosition(4.0f,1.0f,0.0f);
 
-	//pTestObj->getTransfrom().setPosition(0.5f,1.0f,1.0f);
-
 	m_GameObjectList.push_back(pTestObj);
 	
 	// Initialize a camera
 	CameraComponent *pCam=new CameraComponent();
-	//pCam->setLook(0.0f,0.0f,0.0f);
 	pCam->setFOV(m_GameOptionDesc.width/m_GameOptionDesc.height);
 
 	//Add it to a camera gameobject;
