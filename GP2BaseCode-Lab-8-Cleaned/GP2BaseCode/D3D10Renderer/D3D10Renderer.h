@@ -39,6 +39,11 @@ public:
 	ID3D10InputLayout * createVertexLayout(ID3D10Effect * pEffect);
 	ID3D10ShaderResourceView * loadTexture(const string& fileName);
 
+	void setAmbientLightColour(float r, float g , float b, float a)
+	{
+		m_pAmbientLightColour = XMCOLOR(r,g,b,a);
+	};
+
 	void addToRenderQueue(GameObject *pObject);
 
 	//Setting Matrices
@@ -74,6 +79,11 @@ private:
 	//this will be used if we have no Effect
 	ID3D10Effect * m_pDefaultEffect;
 	ID3D10EffectTechnique * m_pDefaultTechnique;
+
+	//Ambient Colour
+	XMCOLOR  m_pAmbientLightColour;
+
+	GameObject * m_pMainLight;
 
 	RenderQueue m_RenderQueue;
 };

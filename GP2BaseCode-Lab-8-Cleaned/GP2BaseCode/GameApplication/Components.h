@@ -1,9 +1,14 @@
 #pragma once
 
 #include "Transform.h"
+
 #include "Material.h"
 #include "VisualComponent.h"
 #include "CubeVisualComponent.h"	
 
-#include "CameraComponent.h" //Alix
+#include "CameraComponent.h" 
 #include "FPControllerComponent.h"
+
+#include "LightComponent.h"
+#include "DirectionalLightComponent.h"
+
