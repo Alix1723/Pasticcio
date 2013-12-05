@@ -98,7 +98,6 @@ copy $(ProjectDir)\Effects\*.fx $(TargetDir)\Effects\*.fx</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Effects\Texture.fx" />
     <None Include="Effects\Transform.fx" />
     <None Include="game.cfg" />

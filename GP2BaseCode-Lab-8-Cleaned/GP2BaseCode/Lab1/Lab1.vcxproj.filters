@@ -33,7 +33,6 @@
     <None Include="Effects\Transform.fx">
       <Filter>Effects</Filter>
     </None>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGame.h">

@@ -10,8 +10,8 @@ public:
 	LightComponent()
 	{
 		m_Name="Light";
-		m_DiffuseColour=XMCOLOR(0.0f,0.0f,0.0f,1.0f);
-		m_SpecularColour=XMCOLOR(0.0f,0.0f,0.0f,1.0f);
+		m_Diffuse=XMCOLOR(0.8f,0.8f,0.8f,1.0f);
+        m_Specular=XMCOLOR(1.0f,1.0f,1.0f,1.0f);
 	};
 	virtual ~LightComponent()
 	{
@@ -19,14 +19,18 @@ public:
 
 	void setDiffuse(float r, float g, float b, float a)
 	{
-		m_DiffuseColour=XMCOLOR(r,g,b,a);
+		m_Diffuse=XMCOLOR(r,g,b,a);
 	};
-	void setSpecular(float r, float g, float b, float a);
-	XMCOLOR& getDiffuse(){return m_DiffuseColour;};
-	XMCOLOR& getSpecular(){return m_SpecularColour;};
+	void setSpecular(float r, float g, float b, float a)
+	{
+		m_Specular=XMCOLOR(r,g,b,a);
+	};
+
+	XMCOLOR& getDiffuse(){return m_Diffuse;};
+	XMCOLOR& getSpecular(){return m_Specular;};
 
 private:
-	XMCOLOR m_DiffuseColour;
-	XMCOLOR m_SpecularColour;
+	XMCOLOR m_Diffuse;
+	XMCOLOR m_Specular;
 
 };

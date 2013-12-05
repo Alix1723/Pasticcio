@@ -36,8 +36,13 @@ public:
 	ID3D10Buffer * createIndexBuffer(int size,int *pIndices);
 	ID3D10InputLayout * createVertexLayout(ID3D10Effect * pEffect);
 
-	void setAmbientLightColour(float r, float g, float b, float a);
+	void setAmbientLightColour(float r, float g , float b, float a)
+	{
+		m_pAmbientLightColour = XMCOLOR(r,g,b,a);
+	};
+
 	void addToRenderQueue(GameObject *pObject);
+
 private:
 	bool createDevice(HWND pWindowHandle,int windowWidth, int windowHeight,
 bool fullScreen);
@@ -58,7 +63,9 @@ private:
 	ID3D10EffectTechnique * m_pDefaultTechnique;
 
 	//Ambient Colour
-	XMCOLOR  m_pAmbientLight;
+	XMCOLOR  m_pAmbientLightColour;
+
+	GameObject * m_pMainLight;
 
 	RenderQueue m_RenderQueue;
 };
