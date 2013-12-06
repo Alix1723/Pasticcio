@@ -25,16 +25,20 @@ void FPControllerComponent::update()
 
 		m_VecAimDirection = XMLoadFloat3(&m_AimDirection);
 		
-		//POSITION - currently NOT RELATIVE TO AIM DIRECTION
+		//POSITION
 		int Forward = (GetAsyncKeyState('W') ? 1 : 0) - (GetAsyncKeyState('S') ? 1 : 0);
 		int Horizontal = (GetAsyncKeyState('D') ? 1 : 0) - (GetAsyncKeyState('A') ? 1 : 0); 
 		int Upwards = (GetAsyncKeyState(VK_SPACE) ? 1 : 0) - (GetAsyncKeyState(VK_CONTROL) ? 1 : 0);
 			
-		m_SpeedMultiplier = m_SpeedMultiplier + 0.00001f*((GetAsyncKeyState(VK_ADD) ? 1 : 0) - (GetAsyncKeyState(VK_SUBTRACT) ? 1 : 0));
+		m_SpeedMultiplier = m_SpeedMultiplier + 0.00001f*((GetAsyncKeyState('Q') ? 1 : 0) - (GetAsyncKeyState('E') ? 1 : 0));
 		if(m_SpeedMultiplier<=0){m_SpeedMultiplier=0.0001f;}
-		
-		m_Translate = XMFLOAT3(Horizontal*m_SpeedMultiplier, Upwards*m_SpeedMultiplier, Forward*m_SpeedMultiplier);
-		m_VecTranslate = XMLoadFloat3(&m_Translate);
+			
+		//Get the vector perpendicular to Aim and Up via Cross Product
+		m_Right = -XMVector3Cross(XMLoadFloat3(&m_AimDirection),m_Up);
+
+		m_VecTranslate = (Forward * m_SpeedMultiplier * m_VecAimDirection)
+			+(Horizontal * m_SpeedMultiplier * m_Right)
+			+(Upwards * m_SpeedMultiplier * m_Up);
 
 		XMVECTOR curPos = XMLoadFloat3(&m_pOwnerGameObject->getTransform().getPosition());
 		XMVECTOR newPos = curPos + m_VecTranslate;

@@ -19,6 +19,8 @@ public:
 		m_AimDirection = XMFLOAT3(0.0f,0.0f,0.0f);
 		GetCursorPos(&m_CurrentCursorPos);
 		m_PreviousCursorPos = m_CurrentCursorPos;
+		XMFLOAT3 up = XMFLOAT3(0.0f,1.0f,0.0f);
+		m_Up = XMLoadFloat3(&up);
 	};
 	~FPControllerComponent(){};
 	void update(); //from parent
@@ -32,8 +34,12 @@ private:
 	POINT m_CurrentCursorPos;
 	POINT m_PreviousCursorPos;
 	XMFLOAT3 m_AimAngle;
+	
 	XMFLOAT3 m_AimDirection;
+	XMVECTOR m_Right;
+	XMVECTOR m_Up;
 
-	XMVECTOR m_VecTranslate;
 	XMVECTOR m_VecAimDirection;
+	XMVECTOR m_VecTranslate;
+	
 };
