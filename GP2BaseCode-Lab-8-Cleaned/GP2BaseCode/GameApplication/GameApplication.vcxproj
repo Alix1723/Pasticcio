@@ -80,6 +80,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GamepadInputComponent.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="CubeVisualComponent.h" />
@@ -100,6 +101,7 @@
     <ClCompile Include="FPControllerComponent.cpp" />
     <ClCompile Include="GameApplication.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GamepadInputComponent.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="VisualComponent.cpp" />
   </ItemGroup>
