@@ -59,8 +59,10 @@ public:
 
 private:
 	bool createDevice(HWND pWindowHandle,int windowWidth, int windowHeight,
-bool fullScreen);
+						bool fullScreen);
 	bool createInitialRenderTarget(int windowWidth, int windowHeight);
+	void render(GameObject *pCurrentObject);
+
 private:
 	typedef std::queue<GameObject*> RenderQueue;
 	//D3D10 stuff

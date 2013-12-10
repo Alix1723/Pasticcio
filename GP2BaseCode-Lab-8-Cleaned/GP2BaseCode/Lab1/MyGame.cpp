@@ -9,7 +9,7 @@ bool MyGame::initGame()
 
 	pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
 	//pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
-	pMaterial->loadDiffuseTexture("textures/armoredrecon_diffuse.png", m_pRenderer);
+	pMaterial->loadDiffuseTexture("Textures/armoredrecon_diffuse.png", m_pRenderer);
 
 	//LightComponent *pLightComponent=new LightComponent();
 	//pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
@@ -40,9 +40,21 @@ bool MyGame::initGame()
 	pCameraObj->getTransform().setRotation(0.0f,0.0f,1.0f);	//Magnitude must not = 0!
 	FPControllerComponent *pFPControl = new FPControllerComponent();
 	pCameraObj->addComponent(pFPControl);
-
-
 	m_GameObjectList.push_back(pCameraObj);
-
+	
+	/*
+	GameObject *pCar=m_ModelLoader.loadModelFromFile("Models/armoredrecon.fbx",m_pRenderer);
+	for(GameObject::ChildrenGameObjectsIter iter=pCar->getFirstChild();iter!=pCar->getLastChild();iter++)
+	{
+		pMaterial=new Material();
+		pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
+		pMaterial->loadDiffuseTexture("Textures/armoredrecon_diffuse.png",m_pRenderer);
+		iter->second->addComponent(pMaterial);
+		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
+		pVisual->createVertexLayout(m_pRenderer);
+	}
+	
+	m_GameObjectList.push_back(pCar);
+	*/
 	return true;
 }

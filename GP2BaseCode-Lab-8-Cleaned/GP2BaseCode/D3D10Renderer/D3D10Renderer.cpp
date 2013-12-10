@@ -224,6 +224,25 @@ void D3D10Renderer::clear(float r,float g,float b,float a)
 
 void D3D10Renderer::render()
 {
+	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
+	//We should really find all lights first! but instead we are just going to set a 'main' light
+	while(!m_RenderQueue.empty())
+	{
+		GameObject * pObject=m_RenderQueue.front();
+		for(GameObject::ChildrenGameObjectsIter iter=pObject->getFirstChild();iter!=pObject->getLastChild();iter++)
+		{
+			GameObject *pCurrentObject=(*iter).second;
+			render(pCurrentObject);
+		}
+		render(pObject);
+		m_RenderQueue.pop();
+	}
+
+}
+
+
+void D3D10Renderer::render(GameObject *pObject)
+{
 
 	int noIndices=0;
 	int noVerts=0;
@@ -233,31 +252,9 @@ void D3D10Renderer::render()
 	ID3D10EffectTechnique *pCurrentTechnique=m_pDefaultTechnique;
 	ID3D10InputLayout *pCurrentLayout=m_pDefaultVertexLayout;
 
-	/*XMFLOAT3 cameraPos=XMFLOAT3(0.0f,0.0f,-10.0f);
-	XMFLOAT3 focusPos=XMFLOAT3(0.0f,0.0f,0.0f);
-	XMFLOAT3 up=XMFLOAT3(0.0f,1.0f,0.0f);
-	XMMATRIX view=XMMatrixLookAtLH(XMLoadFloat3(&cameraPos),XMLoadFloat3(&focusPos),XMLoadFloat3(&up));
-	XMMATRIX projection=XMMatrixPerspectiveFovLH(XM_PI/4,800.0f/640.0f,0.1f,100.0f);
-	XMMATRIX world=XMMatrixIdentity();*/
 
 	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
-
-	//Main camera handles calculation for View and Projection matrices
-	//XMMATRIX world= XMMatrixIdentity(); 
 	
-	while(!m_RenderQueue.empty())
-	{
-		int noIndices=0;
-		int noVerts=0;
-		ID3D10Buffer *pIndexBuffer=NULL;
-		ID3D10Buffer *pVertexBuffer=NULL;
-		ID3D10Effect *pCurrentEffect=m_pDefaultEffect;
-		ID3D10EffectTechnique *pCurrentTechnique=m_pDefaultTechnique;
-		ID3D10InputLayout *pCurrentLayout=m_pDefaultVertexLayout;
-
-		GameObject * pObject=m_RenderQueue.front();
-		if(pObject)
-		{
 			//Grab Transform
 			Transform transform=pObject->getTransform();
 
@@ -372,11 +369,6 @@ void D3D10Renderer::render()
 				else if (pVertexBuffer)
 					m_pD3D10Device->Draw(noVerts,0);
 			}
-
-		}
-
-		m_RenderQueue.pop();
-	}
 }
 
 void D3D10Renderer::present()

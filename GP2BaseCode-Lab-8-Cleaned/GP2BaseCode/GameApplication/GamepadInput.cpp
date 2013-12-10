@@ -26,5 +26,6 @@ short GetAxis(int controllerIndex, int axisIndex)
 
 	memset(&cState,0,sizeof(XINPUT_STATE));
 	DWORD result = XInputGetState(controllerIndex,&cState);
-//	return cState.Gamepad.//cState.Gamepad.wButtons&button;d
+	return cState.Gamepad.sThumbLX;
+		//cState.Gamepad.wButtons&button;d
 }

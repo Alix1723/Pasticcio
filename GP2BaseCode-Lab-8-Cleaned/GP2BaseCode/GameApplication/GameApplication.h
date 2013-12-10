@@ -6,6 +6,8 @@
 
 #include "Components.h"
 #include "GameObject.h"
+#include "ModelLoader.h"
+
 using namespace std;
 
 //Forward decleration of our Window Interface
@@ -65,6 +67,6 @@ protected:
 	wstring m_ConfigFileName;
 	GameObjectList m_GameObjectList;
 	CameraComponent* m_pMainCamera; //Pointer to the current viewable camera
-
+	ModelLoader m_ModelLoader;		// Modelloader
 	
 };
