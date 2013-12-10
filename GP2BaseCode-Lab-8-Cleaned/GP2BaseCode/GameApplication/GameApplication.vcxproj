@@ -104,6 +104,7 @@
     <ClCompile Include="GamepadInput.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VisualComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

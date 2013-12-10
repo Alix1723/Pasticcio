@@ -81,13 +81,13 @@ void GameObject::update()
 void GameObject::addChild(GameObject *pChild)
 {
 	const string name=pChild->getName();
-    if (m_Children.find(name)==m_Children.end())
+	if (m_Children.find(name)==m_Children.end())
 	{
 		pChild->setParent(this);
-        m_Children[name]=pChild;
+		m_Children[name]=pChild;
 	}
-    else
-    {
+	else
+	{
 		//do nothing!
-    }
+	}
 }

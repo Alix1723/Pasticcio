@@ -42,8 +42,8 @@ bool MyGame::initGame()
 	pCameraObj->addComponent(pFPControl);
 	m_GameObjectList.push_back(pCameraObj);
 	
-	/*
-	GameObject *pCar=m_ModelLoader.loadModelFromFile("Models/armoredrecon.fbx",m_pRenderer);
+	
+	/*GameObject *pCar=m_ModelLoader.loadModelFromFile("Models/armoredrecon.fbx",m_pRenderer);
 	for(GameObject::ChildrenGameObjectsIter iter=pCar->getFirstChild();iter!=pCar->getLastChild();iter++)
 	{
 		pMaterial=new Material();
