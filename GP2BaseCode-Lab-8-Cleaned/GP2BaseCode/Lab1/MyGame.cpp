@@ -41,6 +41,7 @@ bool MyGame::initGame()
 	FPControllerComponent *pFPControl = new FPControllerComponent();
 	pCameraObj->addComponent(pFPControl);
 
+
 	m_GameObjectList.push_back(pCameraObj);
 
 	return true;

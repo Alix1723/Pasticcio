@@ -1,5 +1,6 @@
 #include "FPControllerComponent.h"
 #include "GameObject.h"
+#include "GamepadInput.h"
 
 void FPControllerComponent::update()
 {
@@ -25,7 +26,7 @@ void FPControllerComponent::update()
 		m_VecAimDirection = XMLoadFloat3(&m_AimDirection);
 		
 		//POSITION
-		int Forward = (GetAsyncKeyState('W') ? 1 : 0) - (GetAsyncKeyState('S') ? 1 : 0); //Key Inputs
+		int Forward = IsButtonPressed(0,XINPUT_GAMEPAD_DPAD_UP) ;//(GetAsyncKeyState('W') ? 1 : 0) - (GetAsyncKeyState('S') ? 1 : 0); //Key Inputs
 		int Horizontal = (GetAsyncKeyState('D') ? 1 : 0) - (GetAsyncKeyState('A') ? 1 : 0); //(Key A - Key B) will give you a 1/0/-1 input axis
 		int Upwards = (GetAsyncKeyState(VK_SPACE) ? 1 : 0) - (GetAsyncKeyState(VK_CONTROL) ? 1 : 0);
 

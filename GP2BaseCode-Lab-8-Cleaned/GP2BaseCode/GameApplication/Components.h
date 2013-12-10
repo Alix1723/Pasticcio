@@ -8,7 +8,6 @@
 
 #include "CameraComponent.h" 
 #include "FPControllerComponent.h"
-#include "GamepadInputComponent.h"
 
 #include "LightComponent.h"
 #include "DirectionalLightComponent.h"

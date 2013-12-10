@@ -22,7 +22,7 @@
     <ClCompile Include="VisualComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GamepadInputComponent.cpp">
+    <ClCompile Include="GamepadInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,7 +66,7 @@
     <ClInclude Include="VisualComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GamepadInputComponent.h">
+    <ClInclude Include="GamepadInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

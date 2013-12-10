@@ -52,11 +52,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,7 +79,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GamepadInputComponent.h" />
+    <ClInclude Include="GamepadInput.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="CubeVisualComponent.h" />
@@ -101,7 +100,7 @@
     <ClCompile Include="FPControllerComponent.cpp" />
     <ClCompile Include="GameApplication.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GamepadInputComponent.cpp" />
+    <ClCompile Include="GamepadInput.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="VisualComponent.cpp" />
   </ItemGroup>
