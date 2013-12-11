@@ -62,7 +62,7 @@ D3D10Renderer::D3D10Renderer()
 	m_pViewMatrix = XMMatrixIdentity();			//Setting matrices to Identity for initialization
 	m_pProjectionMatrix = XMMatrixIdentity();
 
-	setAmbientLightColour(1.0f,0.3f,0.25f,0.0f);
+	setAmbientLightColour(0.8f,0.2f,0.2f,1.0f);
     m_pMainLight=NULL;
 
 }
@@ -305,7 +305,7 @@ void D3D10Renderer::render()
 				{
 					pCurrentTechnique=pMaterial->getCurrentTechnique();
 				}
-				//Retrieve & send material stuff
+				//Retrieve & send material stuff!!!!!!!
 				if (pMaterial->getDiffuseTexture()) 
 				{					
 					// CHECK NAME INSIDE THE EFFECT!!!
@@ -318,16 +318,26 @@ void D3D10Renderer::render()
 					ID3D10EffectShaderResourceVariable * pSpecularTextureVariable = pCurrentEffect->GetVariableByName("specularTexture")->AsShaderResource();
 					pSpecularTextureVariable->SetResource(pMaterial->getSpecularTexture());
 				}
+				
+				ID3D10EffectVectorVariable * pAmbientMaterial = pCurrentEffect->GetVariableByName("ambientMaterial")->AsVector();
+				//ID3D10EffectVectorVariable * pDiffuseMaterial = pCurrentEffect->GetVariableByName("diffuseMaterial")->AsVector();
+				//ID3D10EffectVectorVariable * pSpecularMaterial = pCurrentEffect->GetVariableByName("specularMaterial")->AsVector();	
+				
+				pAmbientMaterial->SetFloatVector((float*)&pMaterial->getAmbient());
+				//pDiffuseMaterial->SetFloatVector((float*)&pMaterial->getDiffuse());
+			//	pSpecularMaterial->SetFloatVector((float*)&pMaterial->getSpecular());
+
 			}
 
 			ID3D10EffectMatrixVariable * pWorldMatrixVar=pCurrentEffect->GetVariableByName("matWorld")->AsMatrix();
 			ID3D10EffectMatrixVariable * pViewMatrixVar=pCurrentEffect->GetVariableByName("matView")->AsMatrix();
 			ID3D10EffectMatrixVariable * pProjectionMatrixVar=pCurrentEffect->GetVariableByName("matProjection")->AsMatrix();
 			ID3D10EffectVectorVariable * pAmbientLightColourVar=pCurrentEffect->GetVariableByName("ambientLightColour")->AsVector();
-
+		
+			
 			if(m_pMainLight)
 			{
-				DirectionalLightComponent *pDirectionalLightComponent=static_cast<DirectionalLightComponent *>(pObject->getComponent("DirectionalLight"));
+				DirectionalLightComponent *pDirectionalLightComponent=static_cast<DirectionalLightComponent *>(m_pMainLight->getComponent("Light"));
 				if(pDirectionalLightComponent)
 				{
 					//retrieve vars from effect - Check all names of the vars when testing
@@ -542,6 +552,12 @@ ID3D10InputLayout * D3D10Renderer::createVertexLayout(ID3D10Effect * pEffect)
 
 void D3D10Renderer::addToRenderQueue(GameObject *pObject)
 {
+	DirectionalLightComponent *pLight=static_cast<DirectionalLightComponent*>(pObject->getComponent("DirectionalLight"));
+        if (pLight)
+        {
+                m_pMainLight=pObject;
+        }
+
 	m_RenderQueue.push(pObject);
 }
 

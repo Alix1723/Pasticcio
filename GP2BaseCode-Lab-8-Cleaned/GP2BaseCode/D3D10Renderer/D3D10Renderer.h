@@ -57,6 +57,13 @@ public:
 		m_pProjectionMatrix = sProj;
 	};
 
+	//Set main light
+
+	void setMainLight(GameObject *light)
+	{
+		m_pMainLight = light;
+	};
+
 private:
 	bool createDevice(HWND pWindowHandle,int windowWidth, int windowHeight,
 bool fullScreen);
@@ -82,7 +89,7 @@ private:
 
 	//Ambient Colour
 	XMCOLOR  m_pAmbientLightColour;
-
+	//main Light
 	GameObject * m_pMainLight;
 
 	RenderQueue m_RenderQueue;
