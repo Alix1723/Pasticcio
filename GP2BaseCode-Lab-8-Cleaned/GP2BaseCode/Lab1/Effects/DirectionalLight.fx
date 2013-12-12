@@ -5,7 +5,7 @@ float4x4 matProjection:PROJECTION<string UIWidget="None";>;
 float4 ambientMaterial<
 	string UIName="Ambient Material";
 	string UIWidget="Color";
-> = float4(0.5f,0.5f,0.5f,1.0f);
+> = float4(0.2f,0.2f,0.2f,1.0f);
 
 float4 diffuseMaterial<
 	string UIName="Diffuse Material";
@@ -22,9 +22,9 @@ float4 specularMaterial<
 float4 ambientLightColour<
 	string UIName="Ambient Light";
 	string UIWiget="Color";
-> = float4(0.2f,0.4f,0.4f,1.0f);
+> = float4(0.9f,0.9f,0.9f,1.0f);
 
-float4 lightDirection:DIRECTION<
+float3 lightDirection:DIRECTION<
 		string Object="DirectionalLight";
 >;
 
@@ -97,21 +97,18 @@ PS_INPUT VS(VS_INPUT input)
 
 float4 PS(PS_INPUT input):SV_TARGET
 {
-        float3 normal=normalize(input.normal);        
-        float3 lightDir=normalize(input.lightDir);
+
+	float3 normal=normalize(input.normal);        
+    float3 lightDir=normalize(lightDirection);
        
-        float diffuse=saturate(dot(normal,lightDir));
+    float diffuse=saturate(dot(normal,lightDir));
         
-        float3 halfVec=normalize(lightDir+input.cameraDirection);
-        float specular=pow(saturate(dot(normal,halfVec)),specularPower);
-        float4 finalTexture = diffuseTexture.Sample(wrapSampler,input.texCoord);
+    float3 halfVec=normalize(lightDir+input.cameraDirection);
+    float specular=pow(saturate(dot(normal,halfVec)),specularPower);
+    float4 finalTexture = diffuseTexture.Sample(wrapSampler,input.texCoord);
 
 
-        return ambientMaterial*ambientLightColour;
-		
-		/*+
-        (finalTexture*diffuseLightColour*diffuse)+
-        (specularMaterial*specularLightColour*specular));*/
+    return (ambientMaterial*ambientLightColour)+(finalTexture*diffuseLightColour*diffuse)+(specularMaterial*specularLightColour*specular);
 }
 
 RasterizerState DisableCulling

@@ -62,7 +62,7 @@ D3D10Renderer::D3D10Renderer()
 	m_pViewMatrix = XMMatrixIdentity();			//Setting matrices to Identity for initialization
 	m_pProjectionMatrix = XMMatrixIdentity();
 
-	setAmbientLightColour(0.8f,0.2f,0.2f,1.0f);
+	setAmbientLightColour(0.5f,0.5f,0.5f,1.0f);
     m_pMainLight=NULL;
 
 }
@@ -320,13 +320,18 @@ void D3D10Renderer::render()
 				}
 				
 				ID3D10EffectVectorVariable * pAmbientMaterial = pCurrentEffect->GetVariableByName("ambientMaterial")->AsVector();
-				//ID3D10EffectVectorVariable * pDiffuseMaterial = pCurrentEffect->GetVariableByName("diffuseMaterial")->AsVector();
-				//ID3D10EffectVectorVariable * pSpecularMaterial = pCurrentEffect->GetVariableByName("specularMaterial")->AsVector();	
+				ID3D10EffectVectorVariable * pDiffuseMaterial = pCurrentEffect->GetVariableByName("diffuseMaterial")->AsVector();
+				ID3D10EffectVectorVariable * pSpecularMaterial = pCurrentEffect->GetVariableByName("specularMaterial")->AsVector();	
 				
-				pAmbientMaterial->SetFloatVector((float*)&pMaterial->getAmbient());
-				//pDiffuseMaterial->SetFloatVector((float*)&pMaterial->getDiffuse());
-			//	pSpecularMaterial->SetFloatVector((float*)&pMaterial->getSpecular());
-
+				if(pAmbientMaterial)
+					pAmbientMaterial->SetFloatVector((float*)&pMaterial->getAmbient());
+				
+				if(pDiffuseMaterial)
+					pDiffuseMaterial->SetFloatVector((float*)&pMaterial->getDiffuse());
+				
+				if(pSpecularMaterial)
+					pSpecularMaterial->SetFloatVector((float*)&pMaterial->getSpecular());
+				
 			}
 
 			ID3D10EffectMatrixVariable * pWorldMatrixVar=pCurrentEffect->GetVariableByName("matWorld")->AsMatrix();
@@ -366,7 +371,7 @@ void D3D10Renderer::render()
 			}
 			if (pAmbientLightColourVar)
 			{
-				pAmbientLightColourVar->SetFloatVector((float*)&m_pAmbientLightColour);
+			pAmbientLightColourVar->SetFloatVector((float*)&m_pAmbientLightColour);
 			}
 
 			D3D10_TECHNIQUE_DESC techniqueDesc;
