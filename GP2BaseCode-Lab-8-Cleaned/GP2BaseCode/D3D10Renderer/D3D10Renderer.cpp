@@ -62,7 +62,7 @@ D3D10Renderer::D3D10Renderer()
 	m_pViewMatrix = XMMatrixIdentity();			//Setting matrices to Identity for initialization
 	m_pProjectionMatrix = XMMatrixIdentity();
 
-	setAmbientLightColour(0.5f,0.5f,0.5f,1.0f);
+	setAmbientLightColour(0.5f,0.5f,0.5f,0.0f);
     m_pMainLight=NULL;
 
 }

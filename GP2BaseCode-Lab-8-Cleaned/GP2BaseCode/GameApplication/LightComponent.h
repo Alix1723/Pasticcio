@@ -10,8 +10,8 @@ public:
 	LightComponent()
 	{
 		m_Name="Light";
-		m_Diffuse=XMFLOAT4(0.8f,0.8f,0.8f,1.0f);
-        m_Specular=XMFLOAT4(1.0f,1.0f,1.0f,1.0f);
+		m_Diffuse=XMFLOAT4(0.8f,0.8f,0.8f,0.0f);
+        m_Specular=XMFLOAT4(1.0f,1.0f,1.0f,0.0f);
 	};
 	virtual ~LightComponent()
 	{

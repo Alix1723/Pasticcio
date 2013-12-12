@@ -30,6 +30,7 @@ PS_INPUT VS(VS_INPUT input)
 }
 
 Texture2D diffuseTexture;
+
 SamplerState diffuseSampler
 {
     Filter = MIN_MAG_LINEAR_MIP_POINT;
