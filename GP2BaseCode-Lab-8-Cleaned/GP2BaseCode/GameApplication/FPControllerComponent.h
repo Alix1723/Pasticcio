@@ -14,6 +14,9 @@ public:
 		m_SpeedMultiplier = 0.005;
 		m_Accel = 0.002f;
 		m_MouseSensitivity = 0.1f;
+		m_ControllerAimSensitivity = 0.05f;
+		m_ControllerInput=false;
+
 		m_Translate = XMFLOAT3(0.0f,0.0f,0.0f);
 		m_MouseDelta = XMFLOAT2(0.0f,0.0f);
 		m_AimAngle = XMFLOAT3(0.0f,0.0f,0.0f);
@@ -30,12 +33,19 @@ public:
 	void update(); //from parent
 
 private:
+	bool m_ControllerInput;
+
 	float m_SpeedMultiplier;
 	float m_MouseSensitivity;
+	float m_ControllerAimSensitivity;
 	float m_Accel;
 	float m_SmoothX;
 	float m_SmoothY;
 	float m_SmoothZ;
+
+	float iForward;
+	float iHorizontal;
+	float iUpwards;
 
 	XMFLOAT3 m_Translate;
 	XMFLOAT2 m_MouseDelta;
