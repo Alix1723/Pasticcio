@@ -9,7 +9,7 @@ bool MyGame::initGame()
 
 	pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
 	//pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
-	pMaterial->loadDiffuseTexture("Textures/armoredrecon_diffuse.png", m_pRenderer);
+	pMaterial->loadDiffuseTexture("Textures/cube1.png", m_pRenderer);
 
 	//LightComponent *pLightComponent=new LightComponent();
 	//pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
@@ -56,5 +56,20 @@ bool MyGame::initGame()
 	
 	m_GameObjectList.push_back(pCar);
 	
+	GameObject *pEarth=m_ModelLoader.loadModelFromFile("Models/planet_earth.fbx",m_pRenderer);
+	for(GameObject::ChildrenGameObjectsIter iter=pEarth->getFirstChild();iter!=pEarth->getLastChild();iter++)
+	{
+		pMaterial=new Material();
+		pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
+		pMaterial->loadDiffuseTexture("Textures/planet_earth.bmp",m_pRenderer);
+		iter->second->addComponent(pMaterial);
+		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
+		pVisual->createVertexLayout(m_pRenderer);
+		iter->second->getTransform().setScale(0.2f, 0.2f, 0.2f);
+		iter->second->getTransform().setPosition(0.0f, 5.0f, 0.0f);
+	}
+	
+	m_GameObjectList.push_back(pEarth);
+
 	return true;
 }
