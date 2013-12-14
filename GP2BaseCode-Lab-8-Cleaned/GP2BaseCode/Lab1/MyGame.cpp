@@ -1,14 +1,29 @@
 #include "MyGame.h"
+#include "../D3D10Renderer/D3D10Renderer.h"
 
 bool MyGame::initGame()
 {
+	LightComponent *pLightComponent=new LightComponent();
+	pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
+	
+	GameObject *pLight=new GameObject();
+	pLight->setName("TestObject");
+	pLight->addComponent(pLightComponent);
+
+	pLight->getTransform().setPosition(2.0f,1.0f,1.0f);
+	
+	D3D10Renderer *pD3D10Renderer=static_cast<D3D10Renderer*>(m_pRenderer);
+	pD3D10Renderer->setMainLight(pLight);
+	
+	m_GameObjectList.push_back(pLight);
+	//Set Light
 	CubeVisualComponent *pCube=new CubeVisualComponent();
 	pCube->create(m_pRenderer);
 	
 	Material *pMaterial=new Material();
 
-	pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
-	//pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
+	//pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
+	pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
 	pMaterial->loadDiffuseTexture("Textures/cube1.png", m_pRenderer);
 
 	//LightComponent *pLightComponent=new LightComponent();
@@ -47,7 +62,7 @@ bool MyGame::initGame()
 	for(GameObject::ChildrenGameObjectsIter iter=pCar->getFirstChild();iter!=pCar->getLastChild();iter++)
 	{
 		pMaterial=new Material();
-		pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
+		pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
 		pMaterial->loadDiffuseTexture("Textures/armoredrecon_diffuse.png",m_pRenderer);
 		iter->second->addComponent(pMaterial);
 		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
@@ -60,7 +75,7 @@ bool MyGame::initGame()
 	for(GameObject::ChildrenGameObjectsIter iter=pEarth->getFirstChild();iter!=pEarth->getLastChild();iter++)
 	{
 		pMaterial=new Material();
-		pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
+		pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
 		pMaterial->loadDiffuseTexture("Textures/planet_earth.bmp",m_pRenderer);
 		iter->second->addComponent(pMaterial);
 		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));

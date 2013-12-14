@@ -41,7 +41,7 @@ public:
 
 	void setAmbientLightColour(float r, float g , float b, float a)
 	{
-		m_pAmbientLightColour = XMCOLOR(r,g,b,a);
+		m_pAmbientLightColour = XMFLOAT4(r,g,b,a);
 	};
 
 	void addToRenderQueue(GameObject *pObject);
@@ -55,6 +55,12 @@ public:
 	void setProjectionMatrix(XMMATRIX& sProj)
 	{
 		m_pProjectionMatrix = sProj;
+	};
+
+	//Set main light
+	void setMainLight(GameObject *light)
+	{
+		m_pMainLight = light;
 	};
 
 private:
@@ -83,7 +89,7 @@ private:
 	ID3D10EffectTechnique * m_pDefaultTechnique;
 
 	//Ambient Colour
-	XMCOLOR  m_pAmbientLightColour;
+	XMFLOAT4  m_pAmbientLightColour;
 
 	GameObject * m_pMainLight;
 
