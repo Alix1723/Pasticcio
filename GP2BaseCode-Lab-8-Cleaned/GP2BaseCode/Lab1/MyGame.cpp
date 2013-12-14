@@ -26,7 +26,7 @@ bool MyGame::initGame()
 
 	Material *pMaterial=new Material();
 	pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
-	pMaterial->loadDiffuseTexture("textures/armoredrecon_diffuse.png", m_pRenderer);
+	pMaterial->loadDiffuseTexture("Textures/armoredrecon_diffuse.png", m_pRenderer);
 
 	GameObject *pTestObj=new GameObject();
 	pTestObj->setName("TestObject1");
