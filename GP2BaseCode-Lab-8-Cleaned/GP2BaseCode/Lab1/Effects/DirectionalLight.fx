@@ -103,7 +103,9 @@ float4 PS(PS_INPUT input):SV_TARGET
     float4 finalTexture = diffuseTexture.Sample(wrapSampler , input.texCoord);
 
 
-    return (ambientMaterial*ambientLightColour)+(finalTexture *diffuseLightColour*diffuse)+(specularMaterial*specularLightColour*specular);
+    return ((ambientMaterial*ambientLightColour)+
+			((diffuseMaterial+finalTexture)*diffuseLightColour)+
+			(specularMaterial*specularLightColour*specular));
 }
 
 RasterizerState DisableCulling
