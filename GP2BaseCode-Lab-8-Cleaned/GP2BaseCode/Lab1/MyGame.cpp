@@ -29,10 +29,14 @@ bool MyGame::initGame()
 	//LightComponent *pLightComponent=new LightComponent();
 	//pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
 	
+	OrbitalMovementComponent *pOrbMove = new OrbitalMovementComponent(2.0f, 0.0f, 0.0f, 0.0f, "z", 10);
+
 	GameObject *pTestObj=new GameObject();
 	pTestObj->setName("TestObject");
 	pTestObj->addComponent(pCube);
 	pTestObj->addComponent(pMaterial);
+	pTestObj->addComponent(pOrbMove);
+	
 	//pTestObj->addComponent(pLightComponent);
 	
 	pCube->createVertexLayout(m_pRenderer);

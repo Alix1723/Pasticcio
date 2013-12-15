@@ -12,3 +12,4 @@
 #include "LightComponent.h"
 #include "DirectionalLightComponent.h"
 
+#include "OrbitalMovementComponent.h"
