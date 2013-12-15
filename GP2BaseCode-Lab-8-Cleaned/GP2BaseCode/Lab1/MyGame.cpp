@@ -86,5 +86,21 @@ bool MyGame::initGame()
 	
 	m_GameObjectList.push_back(pEarth);
 
+	//Skydome
+	GameObject *pSpace=m_ModelLoader.loadModelFromFile("Models/skSphere.fbx",m_pRenderer);
+	for(GameObject::ChildrenGameObjectsIter iter=pSpace->getFirstChild();iter!=pSpace->getLastChild();iter++)
+	{
+		pMaterial=new Material();
+		pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
+		pMaterial->loadDiffuseTexture("Textures/s_2048.png",m_pRenderer);
+		iter->second->addComponent(pMaterial);
+		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
+		pVisual->createVertexLayout(m_pRenderer);
+		iter->second->getTransform().setScale(5.0f,5.0f,5.0f);
+		iter->second->getTransform().setRotation(1.0f,0.0f,0.0f);
+		iter->second->getTransform().setPosition(0.0f, 0.0f, 0.0f);
+	}
+	m_GameObjectList.push_back(pSpace);
+
 	return true;
 }
