@@ -75,6 +75,24 @@ bool MyGame::initGame()
 	
 	m_GameObjectList.push_back(pCar);
 	
+	
+	GameObject *pCorridor=m_ModelLoader.loadModelFromFile("Models/Corridor.fbx",m_pRenderer);
+	for(GameObject::ChildrenGameObjectsIter iter=pCorridor->getFirstChild();iter!=pCorridor->getLastChild();iter++)
+	{
+		pMaterial=new Material();
+		pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
+		//pMaterial->loadDiffuseTexture("Textures/planet_earth.bmp",m_pRenderer);
+		iter->second->addComponent(pMaterial);
+		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
+		pVisual->createVertexLayout(m_pRenderer);
+		iter->second->getTransform().setScale(0.6f, 0.6f, 0.6f);
+		iter->second->getTransform().setPosition(0.0f, 0.0f, 0.0f);
+		iter->second->getTransform().setRotation(-3.9f, 0.0f, 0.0f);
+	}
+
+	m_GameObjectList.push_back(pCorridor);
+	
+	
 	GameObject *pEarth=m_ModelLoader.loadModelFromFile("Models/planet_earth.fbx",m_pRenderer);
 	for(GameObject::ChildrenGameObjectsIter iter=pEarth->getFirstChild();iter!=pEarth->getLastChild();iter++)
 	{
