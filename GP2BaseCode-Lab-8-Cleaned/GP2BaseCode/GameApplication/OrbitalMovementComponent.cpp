@@ -22,10 +22,7 @@ void OrbitalMovementComponent::update()
 	if(m_difftime >= m_speed)
 	{
 		m_startTime = GetTickCount();
-		m_Phi += 0.00001f;
-		rotate();
-		if(m_Phi >= 1.0f)
-			m_Phi = 0.0f;
+		rotate();	
 	}
 	
 

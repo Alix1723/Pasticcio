@@ -22,11 +22,9 @@ public:
 		m_RotPoint.z = z;
 		m_pAxis = axis;
 		m_Init = true;
-		m_Phi = 0.0f;
+		m_Phi = 0.01f;
 		m_startTime = GetTickCount();
 		m_speed = speed;
-	
-		
 		
 	};
 	~OrbitalMovementComponent(){};
