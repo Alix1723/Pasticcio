@@ -4,7 +4,7 @@
 bool MyGame::initGame()
 {
 	LightComponent *pLightComponent=new LightComponent();
-	pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
+	//pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
 	
 	GameObject *pLight=new GameObject();
 	pLight->setName("TestObject");
@@ -29,7 +29,7 @@ bool MyGame::initGame()
 	//LightComponent *pLightComponent=new LightComponent();
 	//pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
 	
-	OrbitalMovementComponent *pOrbMove = new OrbitalMovementComponent(2.0f, 0.0f, 0.0f, 0.0f, "z", 10);
+	OrbitalMovementComponent *pOrbMove = new OrbitalMovementComponent(2.0f, 0.0f, 0.0f, 0.0f, "z", 10, 0.0f, 0.0f, 0.0f);
 
 	GameObject *pTestObj=new GameObject();
 	pTestObj->setName("TestObject");
@@ -55,7 +55,7 @@ bool MyGame::initGame()
 	pCameraObj->addComponent(pCam);
 	setMainCamera(pCam);
 	
-	pCameraObj->getTransform().setPosition(0.0f,0.0f,-10.0f);
+	pCameraObj->getTransform().setPosition(5.0f,0.0f,-10.0f);
 	pCameraObj->getTransform().setRotation(0.0f,0.0f,1.0f);	//Magnitude must not = 0!
 	FPControllerComponent *pFPControl = new FPControllerComponent();
 	pCameraObj->addComponent(pFPControl);
@@ -123,6 +123,26 @@ bool MyGame::initGame()
 		iter->second->getTransform().setPosition(0.0f, 0.0f, 0.0f);
 	}
 	m_GameObjectList.push_back(pSpace);
+	
+	//Spaceship
+	OrbitalMovementComponent *pOrbMoveSpaceShip = new OrbitalMovementComponent(20.0f, 0.0f, 0.0f, 0.0f, "z", 10, 0.0f, 5.0, 0.0f);
+	GameObject *pSpaceShip=m_ModelLoader.loadModelFromFile("Models/spaceship01.fbx",m_pRenderer);
+	for(GameObject::ChildrenGameObjectsIter iter=pSpaceShip->getFirstChild();iter!=pSpaceShip->getLastChild();iter++)
+	{
+		pMaterial=new Material();
+		pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
+		pMaterial->loadDiffuseTexture("Textures/mat_ship.bmp",m_pRenderer);
+		iter->second->addComponent(pMaterial);
+		iter->second->addComponent(pOrbMoveSpaceShip);
+		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
+		pVisual->createVertexLayout(m_pRenderer);
+		iter->second->getTransform().setScale(0.2f,0.2f,0.2f);
+		iter->second->getTransform().setRotation(0.0f,0.0f,0.0f);
+		//iter->second->getTransform().setPosition(0.0f, 0.0f, 0.0f);
+	}
+	m_GameObjectList.push_back(pSpaceShip);
+
+
 
 	return true;
 }
