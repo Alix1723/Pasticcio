@@ -224,7 +224,7 @@ void D3D10Renderer::clear(float r,float g,float b,float a)
 
 void D3D10Renderer::render()
 {
-	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
+	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	//We should really find all lights first! but instead we are just going to set a 'main' light
 	while(!m_RenderQueue.empty())
 	{
@@ -253,7 +253,7 @@ void D3D10Renderer::render(GameObject *pObject)
 	ID3D10InputLayout *pCurrentLayout=m_pDefaultVertexLayout;
 
 
-	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
+	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	
 	//Grab Transform
 	Transform transform=pObject->getTransform();

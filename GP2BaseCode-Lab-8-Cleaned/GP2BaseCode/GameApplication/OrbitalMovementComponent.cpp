@@ -13,7 +13,7 @@ void OrbitalMovementComponent::update()
 		else if(strcmp(m_pAxis, "y") == 0)
 			m_pOwnerGameObject->getTransform().setPosition(m_RotPoint.x, m_RotPoint.y, m_RotPoint.z+m_Radius);
 		else if(strcmp(m_pAxis, "z") == 0)
-			m_pOwnerGameObject->getTransform().setPosition(m_RotPoint.x+m_Radius, m_RotPoint.y+m_Radius, m_RotPoint.z);
+			m_pOwnerGameObject->getTransform().setPosition(m_RotPoint.x+m_Radius, m_RotPoint.y, m_RotPoint.z);
 	m_Init = false;
 	}
 
