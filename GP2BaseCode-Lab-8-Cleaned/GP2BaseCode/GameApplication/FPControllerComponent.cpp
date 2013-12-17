@@ -6,12 +6,19 @@ void FPControllerComponent::update()
 {
 	if(m_pOwnerGameObject)
 	{
+		bool t = false;
 		//Quick way of toggling M+K/Controller
 		//Warning: Spams, press lightly and quickly to actually get it to work
-		if(GetAsyncKeyState(VK_F1))
+		if(GetAsyncKeyState(VK_F1) & !t)
 		{
 			m_ControllerInput = !m_ControllerInput;
+			t=true;
 		}
+		if(!GetAsyncKeyState(VK_F1) & t)
+		{
+			t=false;
+		}
+
 
 			//DIRECTION
 		//360 controller input
