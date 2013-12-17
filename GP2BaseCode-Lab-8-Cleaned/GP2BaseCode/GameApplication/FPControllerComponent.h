@@ -11,7 +11,7 @@ class FPControllerComponent : public GameComponent
 public:
 	FPControllerComponent()
 	{
-		m_SpeedMultiplier = 0.005;
+		m_SpeedMultiplier = 0.025;
 		m_Accel = 0.002f;
 		m_MouseSensitivity = 0.1f;
 		m_ControllerAimSensitivity = 0.05f;

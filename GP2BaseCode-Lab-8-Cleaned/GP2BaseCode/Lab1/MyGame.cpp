@@ -10,7 +10,7 @@ bool MyGame::initGame()
 	pLight->setName("TestObject");
 	pLight->addComponent(pLightComponent);
 
-	pLight->getTransform().setPosition(2.0f,1.0f,1.0f);
+	pLight->getTransform().setPosition(0.0f,100.0f,-100.0f);
 	
 	D3D10Renderer *pD3D10Renderer=static_cast<D3D10Renderer*>(m_pRenderer);
 	pD3D10Renderer->setMainLight(pLight);
@@ -20,14 +20,12 @@ bool MyGame::initGame()
 	CubeVisualComponent *pCube=new CubeVisualComponent();
 	pCube->create(m_pRenderer);
 	
+
+
 	Material *pMaterial=new Material();
 
-	//pMaterial->loadEffect("Effects/Texture.fx",m_pRenderer);
 	pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
 	pMaterial->loadDiffuseTexture("Textures/cube1.png", m_pRenderer);
-
-	//LightComponent *pLightComponent=new LightComponent();
-	//pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
 	
 	OrbitalMovementComponent *pOrbMove = new OrbitalMovementComponent(2.0f, 0.0f, 0.0f, 0.0f, "z", 10, 0.0f, 0.0f, 0.0f);
 
@@ -36,14 +34,32 @@ bool MyGame::initGame()
 	pTestObj->addComponent(pCube);
 	pTestObj->addComponent(pMaterial);
 	pTestObj->addComponent(pOrbMove);
-	
-	//pTestObj->addComponent(pLightComponent);
-	
-	pCube->createVertexLayout(m_pRenderer);
 
-	pTestObj->getTransform().setPosition(4.0f,1.0f,0.0f);
+    pCube->createVertexLayout(m_pRenderer);
+
+	pTestObj->getTransform().setPosition(1.0f,1.0f,0.0f);
 
 	m_GameObjectList.push_back(pTestObj);
+
+	
+	Material *pParaMaterial=new Material();
+
+	pParaMaterial->loadEffect("Effects/Parallax.fx",m_pRenderer);
+	pParaMaterial->loadDecalView("Textures/brick.dds", m_pRenderer);
+	pParaMaterial->loadNormalMap("Textures/normalMap.dds", m_pRenderer);
+	pParaMaterial->loadHeightMap("Textures/heightMap.dds", m_pRenderer);
+
+	GameObject *pParaCube = new GameObject();
+	pParaCube->setName("Parallax Cube");
+	pParaCube->addComponent(pCube);
+	pParaCube->addComponent(pParaMaterial);
+
+	pParaCube->getTransform().setPosition(4.0f,0.0f,-2.0f);
+
+	m_GameObjectList.push_back(pParaCube);
+
+	
+
 	
 	// Initialize a camera
 	CameraComponent *pCam=new CameraComponent();
@@ -61,7 +77,7 @@ bool MyGame::initGame()
 	pCameraObj->addComponent(pFPControl);
 	m_GameObjectList.push_back(pCameraObj);
 	
-	
+	// car
 	GameObject *pCar=m_ModelLoader.loadModelFromFile("Models/armoredrecon.fbx",m_pRenderer);
 	for(GameObject::ChildrenGameObjectsIter iter=pCar->getFirstChild();iter!=pCar->getLastChild();iter++)
 	{
@@ -75,7 +91,7 @@ bool MyGame::initGame()
 	
 	m_GameObjectList.push_back(pCar);
 	
-	
+	//space station
 	GameObject *pCorridor=m_ModelLoader.loadModelFromFile("Models/Corridor.fbx",m_pRenderer);
 	for(GameObject::ChildrenGameObjectsIter iter=pCorridor->getFirstChild();iter!=pCorridor->getLastChild();iter++)
 	{
@@ -92,7 +108,7 @@ bool MyGame::initGame()
 
 	m_GameObjectList.push_back(pCorridor);
 	
-	
+	// planet
 	GameObject *pEarth=m_ModelLoader.loadModelFromFile("Models/planet_earth.fbx",m_pRenderer);
 	for(GameObject::ChildrenGameObjectsIter iter=pEarth->getFirstChild();iter!=pEarth->getLastChild();iter++)
 	{

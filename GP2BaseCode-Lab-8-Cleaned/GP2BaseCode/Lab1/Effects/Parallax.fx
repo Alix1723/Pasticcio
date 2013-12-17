@@ -51,8 +51,8 @@ cbuffer cbChangeOnResize
 struct VS_INPUT
 {
    float4 Pos : POSITION;
-   float3 Norm : NORMAL;
    float2 Tex : TEXCOORD;
+   float3 Norm : NORMAL;
    float3 STan : TANGENT;
 };
 

@@ -25,7 +25,7 @@ const D3D10_INPUT_ELEMENT_DESC VerexLayout[] =
 	0, //The index of the semantic, see above - BMD
 	DXGI_FORMAT_R32G32B32_FLOAT, //The format of the element, in this case 32 bits of each sub element - BMD
 	0, //Input slot - BMD
-	20, //Offset, this will increase as we add more elements(such texture coords) to the layout - BMD
+	24, //Offset, this will increase as we add more elements(such texture coords) to the layout - BMD
 	D3D10_INPUT_PER_VERTEX_DATA, //Input classification - BMD
 	0 }, //Instance Data slot - BMD
 
@@ -351,6 +351,8 @@ void D3D10Renderer::render(GameObject *pObject)
 			ID3D10EffectMatrixVariable * pWorldMatrixVar=pCurrentEffect->GetVariableByName("matWorld")->AsMatrix();
 			ID3D10EffectMatrixVariable * pViewMatrixVar=pCurrentEffect->GetVariableByName("matView")->AsMatrix();
 			ID3D10EffectMatrixVariable * pProjectionMatrixVar=pCurrentEffect->GetVariableByName("matProjection")->AsMatrix();
+			ID3D10EffectVectorVariable * pEyePosEffectVar = pCurrentEffect->GetVariableByName("eyePos")->AsVector();
+			ID3D10EffectVectorVariable * pLightPositionVar = pCurrentEffect->GetVariableByName("lightPos")->AsVector();
 			ID3D10EffectVectorVariable * pAmbientLightColourVar=pCurrentEffect->GetVariableByName("ambientLightColour")->AsVector();
 		
 			
@@ -386,6 +388,14 @@ void D3D10Renderer::render(GameObject *pObject)
 			if (pAmbientLightColourVar)
 			{
 				pAmbientLightColourVar->SetFloatVector((float*)&m_pAmbientLightColour);
+			}
+			if (pEyePosEffectVar)
+			{
+				pEyePosEffectVar->SetFloatVector((float*)&m_pMainCamera->getTransform().getPosition());
+			}
+			if(pLightPositionVar)
+			{
+				pLightPositionVar->SetFloatVector((float*)&m_pMainCamera->getTransform().getPosition());
 			}
 
 	D3D10_TECHNIQUE_DESC techniqueDesc;
