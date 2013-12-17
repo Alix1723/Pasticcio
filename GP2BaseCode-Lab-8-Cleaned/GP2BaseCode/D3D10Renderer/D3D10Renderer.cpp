@@ -25,11 +25,11 @@ const D3D10_INPUT_ELEMENT_DESC VerexLayout[] =
 	0, //The index of the semantic, see above - BMD
 	DXGI_FORMAT_R32G32B32_FLOAT, //The format of the element, in this case 32 bits of each sub element - BMD
 	0, //Input slot - BMD
-	24, //Offset, this will increase as we add more elements(such texture coords) to the layout - BMD
+	20, //Offset, this will increase as we add more elements(such texture coords) to the layout - BMD
 	D3D10_INPUT_PER_VERTEX_DATA, //Input classification - BMD
 	0 }, //Instance Data slot - BMD
 
-	{ "TANGENT", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 32, D3D10_INPUT_PER_VERTEX_DATA, 0 }, 
+	{ "TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D10_INPUT_PER_VERTEX_DATA, 0 }, 
 };
 
 const char basicEffect[]=\

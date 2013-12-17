@@ -41,7 +41,7 @@ bool MyGame::initGame()
 
 	m_GameObjectList.push_back(pTestObj);
 
-	
+	/*
 	Material *pParaMaterial=new Material();
 
 	pParaMaterial->loadEffect("Effects/Parallax.fx",m_pRenderer);
@@ -57,7 +57,7 @@ bool MyGame::initGame()
 	pParaCube->getTransform().setPosition(4.0f,0.0f,-2.0f);
 
 	m_GameObjectList.push_back(pParaCube);
-
+	*/
 	
 
 	
@@ -77,7 +77,7 @@ bool MyGame::initGame()
 	pCameraObj->addComponent(pFPControl);
 	m_GameObjectList.push_back(pCameraObj);
 	
-	// car
+	/*// car
 	GameObject *pCar=m_ModelLoader.loadModelFromFile("Models/armoredrecon.fbx",m_pRenderer);
 	for(GameObject::ChildrenGameObjectsIter iter=pCar->getFirstChild();iter!=pCar->getLastChild();iter++)
 	{
@@ -88,8 +88,24 @@ bool MyGame::initGame()
 		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
 		pVisual->createVertexLayout(m_pRenderer);
 	}
-	
 	m_GameObjectList.push_back(pCar);
+	*/
+	// Paracar
+	GameObject *pParaCar=m_ModelLoader.loadModelFromFile("Models/armoredrecon.fbx",m_pRenderer);
+	for(GameObject::ChildrenGameObjectsIter iter=pParaCar->getFirstChild();iter!=pParaCar->getLastChild();iter++)
+	{
+		pMaterial=new Material();
+		pMaterial->loadEffect("Effects/Parallax.fx",m_pRenderer);
+		pMaterial->loadDecalView("Textures/armoredrecon_diffuse.png", m_pRenderer);
+		pMaterial->loadNormalMap("Textures/armoredrecon_N.png", m_pRenderer);
+		pMaterial->loadHeightMap("Textures/armoredrecon_Height.png", m_pRenderer);
+		iter->second->addComponent(pMaterial);
+		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
+		pVisual->createVertexLayout(m_pRenderer);
+		//iter->second->getTransform().setPosition(4.0f, 0.0f, 0.0f);
+	}
+	
+	m_GameObjectList.push_back(pParaCar);
 	
 	//space station
 	GameObject *pCorridor=m_ModelLoader.loadModelFromFile("Models/Corridor.fbx",m_pRenderer);

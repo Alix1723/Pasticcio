@@ -36,6 +36,11 @@ DepthStencilState DepthStencilInfo
 };
 
 
+float4x4 matWorld:WORLD<string UIWidget="None";>;
+float4x4 matView:VIEW<string UIWidget="None";>;
+float4x4 matProjection:PROJECTION<string UIWidget="None";>;
+
+//delete
 cbuffer cbChangesEveryFrame
 {
    matrix World;
@@ -69,14 +74,14 @@ PS_INPUT VS(VS_INPUT input)
 {
    PS_INPUT output = (PS_INPUT)0;
 
-   float4 Pos = mul(input.Pos, World);
-   Pos = mul(Pos, View);
-   output.Pos = mul(Pos, Projection);
+   float4 Pos = mul(input.Pos, matWorld);
+   Pos = mul(Pos, matView);
+   output.Pos = mul(Pos, matProjection);
 
    output.Tex = input.Tex;
 
-   float3 normal = mul(input.Norm, World);
-   normal = mul(normal, View);
+   float3 normal = mul(input.Norm, matWorld);
+   normal = mul(normal, matView);
 
    float3 bTangent = cross(input.STan, normal);
 
@@ -111,6 +116,7 @@ float4 PS(PS_INPUT input) : SV_Target
    float diffuse = saturate(dot(normal, lightVec));
 
    return decal.Sample(DecalSampler, newTexCoord) * diffuse;
+  // return float4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 
