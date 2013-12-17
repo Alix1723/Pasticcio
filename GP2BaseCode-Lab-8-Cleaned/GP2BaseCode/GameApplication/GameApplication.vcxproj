@@ -92,6 +92,7 @@
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="MouseKeyboardInput.h" />
     <ClInclude Include="OrbitalMovementComponent.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="VisualComponent.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="GamepadInput.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
+    <ClCompile Include="MouseKeyboardInput.cpp" />
     <ClCompile Include="OrbitalMovementComponent.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VisualComponent.cpp" />

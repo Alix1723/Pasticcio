@@ -11,22 +11,19 @@ class FPControllerComponent : public GameComponent
 public:
 	FPControllerComponent()
 	{
-		m_SpeedMultiplier = 0.025;
-		m_Accel = 0.002f;
-		m_MouseSensitivity = 0.1f;
+		m_SpeedMultiplier = 0.005;
+		m_Accel = 0.01f;
+		m_MouseSensitivity = 0.2f;
 		m_ControllerAimSensitivity = 0.05f;
 		m_ControllerInput=false;
 
 		m_Translate = XMFLOAT3(0.0f,0.0f,0.0f);
-		m_MouseDelta = XMFLOAT2(0.0f,0.0f);
 		m_AimAngle = XMFLOAT3(0.0f,0.0f,0.0f);
 		m_AimDirection = XMFLOAT3(0.0f,0.0f,0.0f);
-		GetCursorPos(&m_CurrentCursorPos);
-		m_PreviousCursorPos = m_CurrentCursorPos;
 		XMFLOAT3 up = XMFLOAT3(0.0f,1.0f,0.0f);
 		m_Up = XMLoadFloat3(&up);
 		m_SmoothX = 0.0f;
-		m_SmoothY = 0.0f;
+		m_SmoothY = 0.0f; 
 		m_SmoothZ = 0.0f;
 	};
 	~FPControllerComponent(){};
@@ -48,9 +45,6 @@ private:
 	float iUpwards;
 
 	XMFLOAT3 m_Translate;
-	XMFLOAT2 m_MouseDelta;
-	POINT m_CurrentCursorPos;
-	POINT m_PreviousCursorPos;
 	XMFLOAT3 m_AimAngle;
 	
 	XMFLOAT3 m_AimDirection;
@@ -59,5 +53,4 @@ private:
 
 	XMVECTOR m_VecAimDirection;
 	XMVECTOR m_VecTranslate;
-	
 };
