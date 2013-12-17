@@ -358,7 +358,7 @@ void D3D10Renderer::render(GameObject *pObject)
 			
 			if(m_pMainLight)
 			{
-				DirectionalLightComponent *pDirectionalLightComponent=static_cast<DirectionalLightComponent *>(m_pMainLight->getComponent("Light"));
+				DirectionalLightComponent *pDirectionalLightComponent=static_cast<DirectionalLightComponent *>(m_pMainLight->getComponent("DirectionalLight"));
 				if(pDirectionalLightComponent)
 				{
 					//retrieve vars from effect - Check all names of the vars when testing

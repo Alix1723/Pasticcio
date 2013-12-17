@@ -104,7 +104,7 @@ float4 PS(PS_INPUT input):SV_TARGET
 
 
     return ((ambientMaterial*ambientLightColour)+
-			((diffuseMaterial*finalTexture)*diffuseLightColour)+
+			((diffuseMaterial*finalTexture)*(diffuseLightColour*diffuse))+
 			(specularMaterial*specularLightColour*specular));
 }
 

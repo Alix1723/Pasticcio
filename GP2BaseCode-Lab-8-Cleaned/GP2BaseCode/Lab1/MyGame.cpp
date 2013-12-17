@@ -3,7 +3,7 @@
 
 bool MyGame::initGame()
 {
-	LightComponent *pLightComponent=new LightComponent();
+	DirectionalLightComponent *pLightComponent=new DirectionalLightComponent();
 	//pLightComponent->setSpecular(0.5f,0.5,1.0f,1.0f);	//Light Blue
 	
 	GameObject *pLight=new GameObject();
