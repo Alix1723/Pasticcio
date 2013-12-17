@@ -99,6 +99,7 @@ copy $(ProjectDir)\Effects\*.fx $(TargetDir)\Effects\*.fx</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="Effects\DirectionalLight.fx" />
+    <None Include="Effects\Parallax.fx" />
     <None Include="Effects\Texture.fx" />
     <None Include="Effects\Transform.fx" />
     <None Include="game.cfg" />

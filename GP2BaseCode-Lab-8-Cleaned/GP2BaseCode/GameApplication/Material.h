@@ -26,6 +26,8 @@ public:
 		m_Specular=XMFLOAT4(1.0f,1.0f,1.0f,1.0f);
 		m_pDiffuseTexture = NULL;
 		m_pSpecularTexture = NULL;
+		m_pNormalMap = NULL;
+		m_pHeightMap = NULL;
 	};
 
 	~Material()
@@ -44,6 +46,16 @@ public:
 		{
 			m_pSpecularTexture->Release();
 			m_pSpecularTexture=NULL;
+		}
+		if (m_pNormalMap)
+		{
+			m_pNormalMap->Release();
+			m_pNormalMap=NULL;
+		}
+		if (m_pHeightMap)
+		{
+			m_pHeightMap->Release();
+			m_pHeightMap=NULL;
 		}
 	};
 
@@ -80,6 +92,10 @@ public:
 	bool loadEffect(const string& filename,IRenderer * pRenderer);
 	bool loadDiffuseTexture(const string& filename,IRenderer * pRenderer);
 	bool loadSpecularTexture(const string& filename,IRenderer * pRenderer);
+
+	bool loadDecalView(const string& filename,IRenderer * pRenderer);
+	bool loadNormalMap(const string& filename,IRenderer * pRenderer);
+	bool loadHeightMap(const string& filename,IRenderer * pRenderer);
 	void switchTechnique(const string& name);
 
 	ID3D10Effect * getEffect()
@@ -101,6 +117,21 @@ public:
 	{
 		return m_pSpecularTexture;
 	};
+
+	ID3D10ShaderResourceView * getDecalView()
+	{
+		return m_pDecalView;
+	};
+
+	ID3D10ShaderResourceView * getNormalMap()
+	{
+		return m_pNormalMap;
+	};
+
+	ID3D10ShaderResourceView * getHeightMap()
+	{
+		return m_pHeightMap;
+	};
 private:
 	XMFLOAT4 m_Ambient;
 	XMFLOAT4 m_Diffuse;
@@ -109,4 +140,7 @@ private:
 	ID3D10EffectTechnique *m_pCurrentTechnique;
 	ID3D10ShaderResourceView *m_pDiffuseTexture;
 	ID3D10ShaderResourceView *m_pSpecularTexture;
+	ID3D10ShaderResourceView *m_pDecalView;
+	ID3D10ShaderResourceView *m_pNormalMap;
+	ID3D10ShaderResourceView *m_pHeightMap;
 };

@@ -39,6 +39,41 @@ bool Material::loadSpecularTexture(const string& filename,IRenderer * pRenderer)
 	return true;
 }
 
+bool Material::loadDecalView(const string& filename,IRenderer * pRenderer)
+{
+	D3D10Renderer *pD3D10Renderer=static_cast<D3D10Renderer*>(pRenderer);
+
+	m_pDecalView=pD3D10Renderer->loadTexture(filename.c_str());
+	if (!m_pDecalView)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool Material::loadNormalMap(const string& filename,IRenderer * pRenderer)
+{
+	D3D10Renderer *pD3D10Renderer=static_cast<D3D10Renderer*>(pRenderer);
+
+	m_pNormalMap=pD3D10Renderer->loadTexture(filename.c_str());
+	if (!m_pNormalMap)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool Material::loadHeightMap(const string& filename,IRenderer * pRenderer)
+{
+	D3D10Renderer *pD3D10Renderer=static_cast<D3D10Renderer*>(pRenderer);
+
+	m_pHeightMap=pD3D10Renderer->loadTexture(filename.c_str());
+	if (!m_pHeightMap)
+	{
+		return false;
+	}
+	return true;
+}
 void Material::switchTechnique(const string& name)
 {
 	if (m_pEffect)

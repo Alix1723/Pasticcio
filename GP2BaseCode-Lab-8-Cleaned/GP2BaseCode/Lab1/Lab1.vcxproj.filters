@@ -36,6 +36,9 @@
     <None Include="Effects\DirectionalLight.fx">
       <Filter>Effects</Filter>
     </None>
+    <None Include="Effects\Parallax.fx">
+      <Filter>Effects</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGame.h">

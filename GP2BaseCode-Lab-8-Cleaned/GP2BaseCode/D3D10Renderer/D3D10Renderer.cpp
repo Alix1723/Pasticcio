@@ -28,6 +28,8 @@ const D3D10_INPUT_ELEMENT_DESC VerexLayout[] =
 	20, //Offset, this will increase as we add more elements(such texture coords) to the layout - BMD
 	D3D10_INPUT_PER_VERTEX_DATA, //Input classification - BMD
 	0 }, //Instance Data slot - BMD
+
+	{ "TANGENT", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 32, D3D10_INPUT_PER_VERTEX_DATA, 0 }, 
 };
 
 const char basicEffect[]=\
@@ -315,6 +317,21 @@ void D3D10Renderer::render(GameObject *pObject)
 					ID3D10EffectShaderResourceVariable * pSpecularTextureVariable = pCurrentEffect->GetVariableByName("specularTexture")->AsShaderResource();
 					pSpecularTextureVariable->SetResource(pMaterial->getSpecularTexture());
 				}
+				if (pMaterial->getDecalView())
+				{
+					ID3D10EffectShaderResourceVariable * pDecalViewEffectVariable = pCurrentEffect->GetVariableByName("decal")->AsShaderResource();
+					pDecalViewEffectVariable->SetResource(pMaterial->getDecalView());
+				}
+				if (pMaterial->getNormalMap())
+				{
+					ID3D10EffectShaderResourceVariable * pNormalMapEffectVariable = pCurrentEffect->GetVariableByName("normalMap")->AsShaderResource();
+					pNormalMapEffectVariable->SetResource(pMaterial->getNormalMap());
+				}
+				if (pMaterial->getHeightMap())
+				{
+					ID3D10EffectShaderResourceVariable * pHeightMapEffectVariable = pCurrentEffect->GetVariableByName("heightMap")->AsShaderResource();
+					pHeightMapEffectVariable->SetResource(pMaterial->getHeightMap());
+				}
 				
 				ID3D10EffectVectorVariable * pAmbientMaterial = pCurrentEffect->GetVariableByName("ambientMaterial")->AsVector();
 				ID3D10EffectVectorVariable * pDiffuseMaterial = pCurrentEffect->GetVariableByName("diffuseMaterial")->AsVector();
@@ -554,11 +571,10 @@ void D3D10Renderer::addToRenderQueue(GameObject *pObject)
     {
             m_pMainLight=pObject;
     }
-
 	CameraComponent *pCamera=static_cast<CameraComponent*>(pObject->getComponent("Camera"));
-    if (pCamera)
+	if (pCamera)
     {
-            m_pMainCamera=pObject;
+		m_pMainCamera=pObject;
     }
 	m_RenderQueue.push(pObject);
 }
