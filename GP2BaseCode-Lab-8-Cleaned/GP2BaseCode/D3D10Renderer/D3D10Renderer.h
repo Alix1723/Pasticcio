@@ -63,6 +63,11 @@ public:
 		m_pMainLight = light;
 	};
 
+	void setMainCamera(GameObject *camera)
+	{
+		m_pMainCamera = camera;
+	};
+
 private:
 	bool createDevice(HWND pWindowHandle,int windowWidth, int windowHeight,
 						bool fullScreen);
@@ -92,6 +97,7 @@ private:
 	XMFLOAT4  m_pAmbientLightColour;
 
 	GameObject * m_pMainLight;
+	GameObject * m_pMainCamera;
 
 	RenderQueue m_RenderQueue;
 };

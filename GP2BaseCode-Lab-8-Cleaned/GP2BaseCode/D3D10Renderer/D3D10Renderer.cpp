@@ -62,7 +62,7 @@ D3D10Renderer::D3D10Renderer()
 	m_pViewMatrix = XMMatrixIdentity();			//Setting matrices to Identity for initialization
 	m_pProjectionMatrix = XMMatrixIdentity();
 
-	setAmbientLightColour(1.0f,0.3f,0.25f,0.0f);
+	setAmbientLightColour(0.5f,0.5f,0.5f,1.0f);
     m_pMainLight=NULL;
 
 }
@@ -553,6 +553,12 @@ void D3D10Renderer::addToRenderQueue(GameObject *pObject)
     if (pLight)
     {
             m_pMainLight=pObject;
+    }
+
+	CameraComponent *pCamera=static_cast<CameraComponent*>(pObject->getComponent("Camera"));
+    if (pCamera)
+    {
+            m_pMainCamera=pObject;
     }
 	m_RenderQueue.push(pObject);
 }

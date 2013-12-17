@@ -5,24 +5,24 @@ float4x4 matProjection:PROJECTION<string UIWidget="None";>;
 float4 ambientMaterial<
 	string UIName="Ambient Material";
 	string UIWidget="Color";
-> = float4(0.2f,0.2f,0.2f,0.0f);
+> = float4(0.5f,0.5f,0.5f,1.0f);
 
 float4 diffuseMaterial<
 	string UIName="Diffuse Material";
 	string UIWidget="Color";
 	string Object="DirectionalLight";
-> = float4(0.8f,0.8f,0.8f,0.0f);
+> = float4(0.8f,0.8f,0.8f,1.0f);
 
 float4 specularMaterial<
 	string UIName="Specular Material";
 	string UIWiget="Color";
-> = float4(1.0f,1.0f,1.0f,0.0f);
+> = float4(1.0f,1.0f,1.0f,1.0f);
 
 
 float4 ambientLightColour<
 	string UIName="Ambient Light";
 	string UIWiget="Color";
-> = float4(0.9f,0.9f,0.9f,0.5f);
+> = float4(1.0f,1.0f,1.0f,1.0f);
 
 float3 lightDirection:DIRECTION<
 		string Object="DirectionalLight";
@@ -42,7 +42,7 @@ float specularPower<
 	float UIMin = 0.0;
 	float UIMax = 25;
 	float UIStep = 1;	
-> = 2.4f;
+> = 25.0f;
  
 float4 cameraPosition;
 
@@ -104,7 +104,7 @@ float4 PS(PS_INPUT input):SV_TARGET
 
 
     return ((ambientMaterial*ambientLightColour)+
-			((diffuseMaterial+finalTexture)*diffuseLightColour)+
+			((diffuseMaterial*finalTexture)*diffuseLightColour)+
 			(specularMaterial*specularLightColour*specular));
 }
 
