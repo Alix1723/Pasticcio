@@ -127,9 +127,8 @@ void CGameApplication::run()
 //Render, called to draw one frame of the game
 void CGameApplication::render()
 {
-
+	D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
 	if(m_pMainCamera){
-		D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
 		pRenderer->setProjectionMatrix(m_pMainCamera->getProjection());
 		pRenderer->setViewMatrix(m_pMainCamera->getView());
 	}
@@ -140,6 +139,15 @@ void CGameApplication::render()
 	}
 
 	m_pRenderer->clear(1.0f,0.0f,0.0f,1.0f);
+	//Render to tex first
+	//pRenderer->SwitchRenderTargets(0);//0 = backbuffer, 1 = texture
+	//m_pRenderer->render();
+
+	//Render texture as fsq
+	//pRenderer->switchRenderTargets(0);
+	//pRenderer->renderFSQuad();
+
+	pRenderer->switchRenderTargets(0);	
 	m_pRenderer->render();
 	m_pRenderer->present();
 }

@@ -30,6 +30,8 @@ public:
 	void clear(float r,float g,float b,float a);
 	void present();
 	void render();
+	void renderFSQuad();
+	void switchRenderTargets(int target);
 
 	ID3D10Effect * loadEffectFromMemory(const char *pMem);
 	ID3D10Effect * loadEffectFromFile(const char *pFilename);
@@ -68,10 +70,13 @@ public:
 		m_pMainCamera = camera;
 	};
 
+	
+
 private:
 	bool createDevice(HWND pWindowHandle,int windowWidth, int windowHeight,
 						bool fullScreen);
 	bool createInitialRenderTarget(int windowWidth, int windowHeight);
+	bool createFXRenderTarget(int windowWidth, int windowHeight);
 	void render(GameObject *pCurrentObject);
 
 private:
@@ -80,8 +85,11 @@ private:
 	ID3D10Device * m_pD3D10Device;
 	IDXGISwapChain * m_pSwapChain;
 	ID3D10RenderTargetView * m_pRenderTargetView;
+	ID3D10RenderTargetView * m_pPostFXRTV;
 	ID3D10DepthStencilView * m_pDepthStencelView;
 	ID3D10Texture2D *m_pDepthStencilTexture;
+	ID3D10Texture2D *m_pPostFXTexture;
+	ID3D10ShaderResourceView *m_pPostFXShaderView;
 
 	//Camera matrices
 	XMMATRIX m_pViewMatrix;

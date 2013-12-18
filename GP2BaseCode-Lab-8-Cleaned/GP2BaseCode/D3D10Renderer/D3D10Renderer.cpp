@@ -61,6 +61,8 @@ D3D10Renderer::D3D10Renderer()
 	m_pDefaultVertexLayout=NULL;
 	m_pDefaultEffect=NULL;
 
+	m_pPostFXTexture=NULL;
+	
 	m_pViewMatrix = XMMatrixIdentity();			//Setting matrices to Identity for initialization
 	m_pProjectionMatrix = XMMatrixIdentity();
 
@@ -83,6 +85,10 @@ D3D10Renderer::~D3D10Renderer()
 		m_pDepthStencelView->Release();
 	if (m_pDepthStencilTexture)
 		m_pDepthStencilTexture->Release();
+	if (m_pPostFXTexture)
+		m_pPostFXTexture->Release();
+	if (m_pPostFXRTV)
+		m_pPostFXRTV->Release();
 	if (m_pSwapChain)
 		m_pSwapChain->Release();
 	if (m_pD3D10Device)
@@ -101,6 +107,8 @@ bool D3D10Renderer::init(void *pWindowHandle,bool fullScreen)
 	if (!createDevice(window,width,height,fullScreen))
 		return false;
 	if (!createInitialRenderTarget(width,height))
+		return false;
+	if (!createFXRenderTarget(width,height))
 		return false;
 
 	//create default effect, please note we are create an input layout based
@@ -153,6 +161,42 @@ bool D3D10Renderer::createDevice(HWND window,int windowWidth, int windowHeight,b
 	return true;
 }
 
+bool D3D10Renderer::createFXRenderTarget(int windowWidth, int windowHeight)
+{
+
+	D3D10_TEXTURE2D_DESC fxTextureDesc;
+	fxTextureDesc.Width = windowWidth;
+	fxTextureDesc.Height = windowHeight;
+	fxTextureDesc.MipLevels = 1;
+	fxTextureDesc.ArraySize = 1;
+	fxTextureDesc.Format = DXGI_FORMAT_R32G32B32_UINT;
+	fxTextureDesc.SampleDesc.Count=1;
+	fxTextureDesc.SampleDesc.Quality=0;
+	fxTextureDesc.Usage=D3D10_USAGE_DEFAULT;
+	fxTextureDesc.BindFlags=D3D10_BIND_DEPTH_STENCIL;
+	fxTextureDesc.CPUAccessFlags=0;
+	fxTextureDesc.MiscFlags=0;
+
+	m_pD3D10Device->CreateTexture2D(&fxTextureDesc,
+		NULL,
+		&m_pPostFXTexture);
+
+	D3D10_SHADER_RESOURCE_VIEW_DESC vdesc;
+		vdesc.Format = DXGI_FORMAT_R32G32B32A32_UINT;
+		vdesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+
+	m_pD3D10Device->CreateShaderResourceView(m_pPostFXTexture,
+		&vdesc,
+		&m_pPostFXShaderView);
+
+	m_pD3D10Device->CreateRenderTargetView(m_pPostFXTexture,
+		NULL,
+		&m_pPostFXRTV);
+	
+
+	return true;
+}
+
 bool D3D10Renderer::createInitialRenderTarget(int windowWidth, int windowHeight)
 {
 	ID3D10Texture2D *pBackBuffer;
@@ -196,9 +240,9 @@ bool D3D10Renderer::createInitialRenderTarget(int windowWidth, int windowHeight)
 	}
        pBackBuffer->Release();
 
-	m_pD3D10Device->OMSetRenderTargets(1, 
+	/*m_pD3D10Device->OMSetRenderTargets(1, 
 		&m_pRenderTargetView,		
-		m_pDepthStencelView);
+		m_pDepthStencelView);*/
 	
 	D3D10_VIEWPORT vp;
    	vp.Width = windowWidth;
@@ -607,4 +651,59 @@ ID3D10ShaderResourceView* D3D10Renderer::loadTexture(const string& fileName)
                 return NULL;
         }
         return pBaseTextureMap;
+}
+
+void D3D10Renderer::switchRenderTargets(int target)
+{
+	if(target)
+	{	//To texture
+		m_pD3D10Device->OMSetRenderTargets(1, 
+			&m_pPostFXRTV,		
+			m_pDepthStencelView);
+	}
+	else
+	{	//To screen
+		m_pD3D10Device->OMSetRenderTargets(1, 
+			&m_pRenderTargetView,		
+			m_pDepthStencelView);
+	}
+}
+
+void D3D10Renderer::renderFSQuad()
+{
+	//Load effect
+	ID3D10Effect* pPostProcessEffect = loadEffectFromFile("Effects/PostProcess.fx");
+	ID3D10EffectTechnique* pPostTechnique = pPostProcessEffect->GetTechniqueByIndex(0);
+
+	//Create vertex buffer
+	D3D10_BUFFER_DESC bdesc;
+	bdesc.Usage = D3D10_USAGE_DEFAULT;
+	bdesc.ByteWidth = sizeof(Vertex) * 4;
+	bdesc.ByteWidth = D3D10_BIND_VERTEX_BUFFER;
+	bdesc.CPUAccessFlags = 0;
+	bdesc.MiscFlags = 0;
+		//Create a quad
+		Vertex v[4];
+			v[0].position		= XMFLOAT3(0.0f,0.0f,0.0f);
+			v[1].position		= XMFLOAT3(0.0f,1.0f,0.0f);
+			v[2].position		= XMFLOAT3(1.0f,1.0f,0.0f);
+			v[3].position		= XMFLOAT3(1.0f,0.0f,0.0f);
+			v[0].textureCoords	= XMFLOAT2(0.0f,0.0f);
+			v[1].textureCoords	= XMFLOAT2(0.0f,1.0f);
+			v[2].textureCoords	= XMFLOAT2(1.0f,1.0f);
+			v[3].textureCoords	= XMFLOAT2(1.0f,0.0f);
+
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+		ID3D10Buffer* pVertsBuffer = createVertexBuffer(4,v);
+		m_pD3D10Device->IASetVertexBuffers(0,1,&pVertsBuffer,&stride,&offset);
+		
+		m_pD3D10Device->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	
+	//D3D10_TECHNIQUE_DESC tDesc;
+	//pPostTechnique->GetDesc(&tDesc);
+
+	pPostTechnique->GetPassByIndex(0)->Apply(0);
+	m_pD3D10Device->Draw(4,0);
+	//m_pD3D10Device->draw
 }
