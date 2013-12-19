@@ -1,36 +1,40 @@
 float4x4 matProjection:PROJECTION;
 
-Texture2D renderedView;
-
 struct VS_INPUT
 {
 	float4 pos:POSITION;
-	float2 texCoord;
+	//float4 colour:COLOR;
+	float2 texCoord:TEXCOORD0;
 };
 
 struct PS_INPUT
 {
 	float4 pos:SV_POSITION;
-	float4 col:COLOR;
+	//float4 colour:COLOR;
+	float2 texCoord:TEXCOORD0;
 };
 
 PS_INPUT VS(VS_INPUT input)
 {
 	PS_INPUT output=(PS_INPUT)0;
+	
 	output.pos=mul(input.pos,matProjection);
+	//output.colour=input.colour;
+	output.texCoord=input.texCoord;
 	return output;
 }
 
-SamplerState sceneSampler
+Texture2D diffuseTexture;
+SamplerState diffuseSampler
 {
     Filter = MIN_MAG_LINEAR_MIP_POINT;
-    AddressU = Clamp;
-    AddressV = Clamp;
+    AddressU = Wrap;
+    AddressV = Wrap;
 };
 
 float4 PS(PS_INPUT input):SV_TARGET
 {
-	return renderedView.Sample(sceneSampler,input.texCoord);     
+	return diffuseTexture.Sample(diffuseSampler,input.texCoord);
 }
 
 RasterizerState DisableCulling

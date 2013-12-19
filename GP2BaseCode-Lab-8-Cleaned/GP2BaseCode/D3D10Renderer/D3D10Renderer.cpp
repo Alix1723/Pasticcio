@@ -61,8 +61,6 @@ D3D10Renderer::D3D10Renderer()
 	m_pDefaultVertexLayout=NULL;
 	m_pDefaultEffect=NULL;
 
-	m_pPostFXTexture=NULL;
-	
 	m_pViewMatrix = XMMatrixIdentity();			//Setting matrices to Identity for initialization
 	m_pProjectionMatrix = XMMatrixIdentity();
 
@@ -85,10 +83,6 @@ D3D10Renderer::~D3D10Renderer()
 		m_pDepthStencelView->Release();
 	if (m_pDepthStencilTexture)
 		m_pDepthStencilTexture->Release();
-	if (m_pPostFXTexture)
-		m_pPostFXTexture->Release();
-	if (m_pPostFXRTV)
-		m_pPostFXRTV->Release();
 	if (m_pSwapChain)
 		m_pSwapChain->Release();
 	if (m_pD3D10Device)
@@ -108,7 +102,7 @@ bool D3D10Renderer::init(void *pWindowHandle,bool fullScreen)
 		return false;
 	if (!createInitialRenderTarget(width,height))
 		return false;
-	if (!createFXRenderTarget(width,height))
+	if(!createPostFXRenderTarget(width,height))
 		return false;
 
 	//create default effect, please note we are create an input layout based
@@ -161,42 +155,6 @@ bool D3D10Renderer::createDevice(HWND window,int windowWidth, int windowHeight,b
 	return true;
 }
 
-bool D3D10Renderer::createFXRenderTarget(int windowWidth, int windowHeight)
-{
-
-	D3D10_TEXTURE2D_DESC fxTextureDesc;
-	fxTextureDesc.Width = windowWidth;
-	fxTextureDesc.Height = windowHeight;
-	fxTextureDesc.MipLevels = 1;
-	fxTextureDesc.ArraySize = 1;
-	fxTextureDesc.Format = DXGI_FORMAT_R32G32B32_UINT;
-	fxTextureDesc.SampleDesc.Count=1;
-	fxTextureDesc.SampleDesc.Quality=0;
-	fxTextureDesc.Usage=D3D10_USAGE_DEFAULT;
-	fxTextureDesc.BindFlags=D3D10_BIND_DEPTH_STENCIL;
-	fxTextureDesc.CPUAccessFlags=0;
-	fxTextureDesc.MiscFlags=0;
-
-	m_pD3D10Device->CreateTexture2D(&fxTextureDesc,
-		NULL,
-		&m_pPostFXTexture);
-
-	D3D10_SHADER_RESOURCE_VIEW_DESC vdesc;
-		vdesc.Format = DXGI_FORMAT_R32G32B32A32_UINT;
-		vdesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
-
-	m_pD3D10Device->CreateShaderResourceView(m_pPostFXTexture,
-		&vdesc,
-		&m_pPostFXShaderView);
-
-	m_pD3D10Device->CreateRenderTargetView(m_pPostFXTexture,
-		NULL,
-		&m_pPostFXRTV);
-	
-
-	return true;
-}
-
 bool D3D10Renderer::createInitialRenderTarget(int windowWidth, int windowHeight)
 {
 	ID3D10Texture2D *pBackBuffer;
@@ -240,9 +198,7 @@ bool D3D10Renderer::createInitialRenderTarget(int windowWidth, int windowHeight)
 	}
        pBackBuffer->Release();
 
-	/*m_pD3D10Device->OMSetRenderTargets(1, 
-		&m_pRenderTargetView,		
-		m_pDepthStencelView);*/
+	//OMSetrendertargets...
 	
 	D3D10_VIEWPORT vp;
    	vp.Width = windowWidth;
@@ -289,7 +245,6 @@ void D3D10Renderer::render()
 
 void D3D10Renderer::render(GameObject *pObject)
 {
-
 	int noIndices=0;
 	int noVerts=0;
 	ID3D10Buffer *pIndexBuffer=NULL;
@@ -297,7 +252,6 @@ void D3D10Renderer::render(GameObject *pObject)
 	ID3D10Effect *pCurrentEffect=m_pDefaultEffect;
 	ID3D10EffectTechnique *pCurrentTechnique=m_pDefaultTechnique;
 	ID3D10InputLayout *pCurrentLayout=m_pDefaultVertexLayout;
-
 
 	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	
@@ -653,57 +607,64 @@ ID3D10ShaderResourceView* D3D10Renderer::loadTexture(const string& fileName)
         return pBaseTextureMap;
 }
 
-void D3D10Renderer::switchRenderTargets(int target)
+bool D3D10Renderer::createPostFXRenderTarget(int windowWidth, int windowHeight)
+{
+	D3D10_TEXTURE2D_DESC texdesc;
+	texdesc.Width = windowWidth;
+	texdesc.Height = windowHeight;
+	texdesc.MipLevels = 1;
+	texdesc.ArraySize = 1;
+	texdesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	texdesc.SampleDesc.Count = 1;
+	texdesc.SampleDesc.Quality = 0;
+	texdesc.Usage = D3D10_USAGE_DEFAULT;
+	texdesc.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;
+	texdesc.CPUAccessFlags = 0;
+	texdesc.MiscFlags = 0;
+	
+	m_pD3D10Device->CreateTexture2D(&texdesc,NULL,&m_pPostFXRenderTexture);
+
+	return true;
+}
+
+void D3D10Renderer::setRenderTarget(int target)
 {
 	if(target)
-	{	//To texture
+	{
+		//Bind as a render view
+		m_pPostFXShaderResView=NULL;
+		
+		D3D10_RENDER_TARGET_VIEW_DESC rtvdesc;
+		rtvdesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		rtvdesc.ViewDimension = D3D10_RTV_DIMENSION_TEXTURE2D;
+		rtvdesc.Texture2D.MipSlice = 0;
+	
+		m_pD3D10Device->CreateRenderTargetView(m_pPostFXRenderTexture,&rtvdesc,&m_pPostFXRenderView);
+
 		m_pD3D10Device->OMSetRenderTargets(1, 
-			&m_pPostFXRTV,		
-			m_pDepthStencelView);
+			&m_pPostFXRenderView,		
+		m_pDepthStencelView);
 	}
 	else
-	{	//To screen
+	{
+		//Bind as a shader res view
+		m_pPostFXRenderView=NULL;
+
+		D3D10_SHADER_RESOURCE_VIEW_DESC srvdesc;
+		srvdesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		srvdesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+		srvdesc.Texture2D.MostDetailedMip = 0;
+		srvdesc.Texture2D.MipLevels = 1;
+
+		m_pD3D10Device->CreateShaderResourceView(m_pPostFXRenderTexture,&srvdesc,&m_pPostFXShaderResView);
+
 		m_pD3D10Device->OMSetRenderTargets(1, 
 			&m_pRenderTargetView,		
-			m_pDepthStencelView);
+		m_pDepthStencelView);
 	}
 }
 
-void D3D10Renderer::renderFSQuad()
+ID3D10ShaderResourceView* D3D10Renderer::getRenderTexture()
 {
-	//Load effect
-	ID3D10Effect* pPostProcessEffect = loadEffectFromFile("Effects/PostProcess.fx");
-	ID3D10EffectTechnique* pPostTechnique = pPostProcessEffect->GetTechniqueByIndex(0);
-
-	//Create vertex buffer
-	D3D10_BUFFER_DESC bdesc;
-	bdesc.Usage = D3D10_USAGE_DEFAULT;
-	bdesc.ByteWidth = sizeof(Vertex) * 4;
-	bdesc.ByteWidth = D3D10_BIND_VERTEX_BUFFER;
-	bdesc.CPUAccessFlags = 0;
-	bdesc.MiscFlags = 0;
-		//Create a quad
-		Vertex v[4];
-			v[0].position		= XMFLOAT3(0.0f,0.0f,0.0f);
-			v[1].position		= XMFLOAT3(0.0f,1.0f,0.0f);
-			v[2].position		= XMFLOAT3(1.0f,1.0f,0.0f);
-			v[3].position		= XMFLOAT3(1.0f,0.0f,0.0f);
-			v[0].textureCoords	= XMFLOAT2(0.0f,0.0f);
-			v[1].textureCoords	= XMFLOAT2(0.0f,1.0f);
-			v[2].textureCoords	= XMFLOAT2(1.0f,1.0f);
-			v[3].textureCoords	= XMFLOAT2(1.0f,0.0f);
-
-		UINT stride = sizeof(Vertex);
-		UINT offset = 0;
-		ID3D10Buffer* pVertsBuffer = createVertexBuffer(4,v);
-		m_pD3D10Device->IASetVertexBuffers(0,1,&pVertsBuffer,&stride,&offset);
-		
-		m_pD3D10Device->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	
-	//D3D10_TECHNIQUE_DESC tDesc;
-	//pPostTechnique->GetDesc(&tDesc);
-
-	pPostTechnique->GetPassByIndex(0)->Apply(0);
-	m_pD3D10Device->Draw(4,0);
-	//m_pD3D10Device->draw
+	return m_pPostFXShaderResView;
 }

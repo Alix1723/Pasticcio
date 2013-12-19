@@ -96,7 +96,11 @@ public:
 	bool loadDecalView(const string& filename,IRenderer * pRenderer);
 	bool loadNormalMap(const string& filename,IRenderer * pRenderer);
 	bool loadHeightMap(const string& filename,IRenderer * pRenderer);
+	
+	bool loadRenderViewAsDiffuse(IRenderer * pRenderer);
+
 	void switchTechnique(const string& name);
+
 
 	ID3D10Effect * getEffect()
 	{

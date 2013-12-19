@@ -34,8 +34,8 @@ void FPControllerComponent::update()
 			m_AimAngle.y -= delta.x*m_MouseSensitivity;
 		}
 
-		if(m_AimAngle.y>90.0f){m_AimAngle.y=90.0f;}		//Clamp the pitch between -90 and 90 degrees
-		if(m_AimAngle.y<-90.0f){m_AimAngle.y=-90.0f;}
+		if(m_AimAngle.y>89.0f){m_AimAngle.y=89.0f;}		//Clamp the pitch between -90 and 90 degrees
+		if(m_AimAngle.y<-89.0f){m_AimAngle.y=-89.0f;}
 			float d2r = (XM_PI * 2) / 360;	//Convert Degrees to Radians
 		m_AimDirection.x = cos(m_AimAngle.x * d2r) * cos(m_AimAngle.y * d2r);		//Convert degrees into vector components via trigonomentry
 		m_AimDirection.z = sin(m_AimAngle.x * d2r) * cos(m_AimAngle.y * d2r);;			//Note: for this vector, XZ is horizontal rotation, Y is vertical rotation

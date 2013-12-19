@@ -81,3 +81,15 @@ void Material::switchTechnique(const string& name)
 		m_pCurrentTechnique=m_pEffect->GetTechniqueByName(name.c_str());
 	}
 }
+
+bool Material::loadRenderViewAsDiffuse(IRenderer * pRenderer)
+{
+	D3D10Renderer *pD3D10Renderer=static_cast<D3D10Renderer*>(pRenderer);
+
+	m_pDiffuseTexture=pD3D10Renderer->getRenderTexture();
+	if (!m_pDiffuseTexture)
+	{
+		return false;
+	}
+	return true;
+}

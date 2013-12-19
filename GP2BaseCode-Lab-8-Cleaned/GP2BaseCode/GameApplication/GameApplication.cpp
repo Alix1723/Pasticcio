@@ -139,17 +139,30 @@ void CGameApplication::render()
 	}
 
 	m_pRenderer->clear(1.0f,0.0f,0.0f,1.0f);
-	//Render to tex first
-	//pRenderer->SwitchRenderTargets(0);//0 = backbuffer, 1 = texture
-	//m_pRenderer->render();
 
-	//Render texture as fsq
-	//pRenderer->switchRenderTargets(0);
-	//pRenderer->renderFSQuad();
+	//Render to texture
+	/*pRenderer->setRenderTarget(1);
+	m_pRenderer->render();
 
-	pRenderer->switchRenderTargets(0);	
+	//Use this object to display the rendered texture
+	GameObject *pView=new GameObject();
+		CubeVisualComponent *pCube = new CubeVisualComponent();
+		Material *pViewMaterial = new Material();
+		pViewMaterial->loadRenderViewAsDiffuse(m_pRenderer);
+		pViewMaterial->loadEffect("Effects/Post.fx",m_pRenderer);
+		pView->setName("View");
+		pView->addComponent(pCube);
+		pView->addComponent(pViewMaterial);
+		pView->getTransform().setPosition(0.0f,0.0f,40.0f);
+	
+	m_pRenderer->addToRenderQueue(pView);
+
+	//Render to backbuffer*/
+	pRenderer->setRenderTarget(0);
 	m_pRenderer->render();
 	m_pRenderer->present();
+
+	//Clear and unbind the texture
 }
 
 //Update, called to update the game
