@@ -2,6 +2,7 @@
 #include "Transform.h"
 #include "GameObject.h"
 
+
 void CameraComponent::update()
 {
 	if(m_pOwnerGameObject)

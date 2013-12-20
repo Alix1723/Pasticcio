@@ -50,6 +50,12 @@ public:
 	{
 		m_pMainCamera = sCamera;
 	};
+
+	void setDebugCamera(CameraComponent* dCamera)
+	{
+		m_pDebugCamera = dCamera;
+	};
+
 private:
 	bool parseConfigFile();
 	bool initInput();
@@ -58,6 +64,8 @@ private:
 	bool initPhysics();
 
 	bool initWindow();
+
+	bool cameraToggle;
 protected:
 	typedef vector<GameObject*> GameObjectList;
 	typedef vector<GameObject*>::iterator GameObjectIter;
@@ -67,6 +75,7 @@ protected:
 	wstring m_ConfigFileName;
 	GameObjectList m_GameObjectList;
 	CameraComponent* m_pMainCamera; //Pointer to the current viewable camera
+	CameraComponent* m_pDebugCamera; 
 	ModelLoader m_ModelLoader;		// Modelloader
 	
 };

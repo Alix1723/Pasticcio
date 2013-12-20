@@ -4,6 +4,7 @@
 #include "../Window/Win32Window.h"
 #include "../D3D10Renderer/D3D10Renderer.h"
 #include "GameObject.h"
+#include "MouseKeyboardInput.h"
 
 //boost header for program options
 //#include <boost/program_options.hpp>
@@ -28,6 +29,8 @@ CGameApplication::CGameApplication(void)
 	//Config options
 	m_ConfigFileName=TEXT("game.cfg");
 	m_pMainCamera = NULL;
+	m_pDebugCamera = NULL;
+	cameraToggle = false;
 }
 
 //Desconstructor
@@ -129,8 +132,17 @@ void CGameApplication::render()
 {
 	D3D10Renderer *pRenderer = static_cast<D3D10Renderer*>(m_pRenderer);
 	if(m_pMainCamera){
-		pRenderer->setProjectionMatrix(m_pMainCamera->getProjection());
-		pRenderer->setViewMatrix(m_pMainCamera->getView());
+		if(cameraToggle)
+		{
+			pRenderer->setProjectionMatrix(m_pDebugCamera->getProjection());
+			pRenderer->setViewMatrix(m_pDebugCamera->getView());
+		}
+		else
+		{
+			pRenderer->setProjectionMatrix(m_pMainCamera->getProjection());
+			pRenderer->setViewMatrix(m_pMainCamera->getView());
+		}
+		
 	}
 
 	for(GameObjectIter iter=m_GameObjectList.begin();iter!=m_GameObjectList.end();++iter)
@@ -167,11 +179,23 @@ void CGameApplication::render()
 
 //Update, called to update the game
 void CGameApplication::update()
-{
+{			
+		static bool u;//Probably a bad idea to do it here, but I'm running out of options
+		if(GetKeyPressed(VK_F2) & !u)
+		{
+			cameraToggle = !cameraToggle;
+			u=true;
+		}
+		if(!GetKeyPressed(VK_F2) & u)
+		{
+			u=false;
+		}
+
 	for(GameObjectIter iter=m_GameObjectList.begin();iter!=m_GameObjectList.end();iter++)
 	{
 		(*iter)->update();
 	}
+	
 }
 
 void CGameApplication::clearObjectList()

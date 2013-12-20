@@ -59,9 +59,7 @@ bool MyGame::initGame()
 	m_GameObjectList.push_back(pParaCube);
 	*/
 	
-
-	
-	// Initialize a camera
+	//1: Normal camera
 	CameraComponent *pCam=new CameraComponent();
 	pCam->setFOV(m_GameOptionDesc.width/m_GameOptionDesc.height);
 
@@ -70,12 +68,33 @@ bool MyGame::initGame()
 	pCameraObj->setName("MainCamera");
 	pCameraObj->addComponent(pCam);
 	setMainCamera(pCam);
-	
-	pCameraObj->getTransform().setPosition(5.0f,0.0f,-10.0f);
-	pCameraObj->getTransform().setRotation(0.0f,0.0f,1.0f);	//Magnitude must not = 0!
+	pCameraObj->getTransform().setPosition(0.0f,0.0f,-10.0f);
+	pCameraObj->getTransform().setRotation(1.0f,0.0f,0.0f);	//Magnitude must not = 0!
 	FPControllerComponent *pFPControl = new FPControllerComponent();
+	pFPControl->setActivated(true); //Activate this controller to use as default
+	pFPControl->setRestricted(true);
 	pCameraObj->addComponent(pFPControl);
+
 	m_GameObjectList.push_back(pCameraObj);
+
+	//2: DEBUG camera, with unrestricted movement
+	//CURRENTLY UNRELIABLE, USE WITH CAUTION
+	CameraComponent *pDebugCam=new CameraComponent();
+	pCam->setFOV(m_GameOptionDesc.width/m_GameOptionDesc.height);
+
+	//Add it to a camera gameobject;
+	GameObject *pDebugCameraObj=new GameObject();
+	pDebugCameraObj->setName("DebugCamera");
+	pDebugCameraObj->addComponent(pDebugCam);
+	setDebugCamera(pDebugCam);
+	pDebugCameraObj->getTransform().setPosition(0.0f,0.0f,-10.0f);
+	pDebugCameraObj->getTransform().setRotation(1.0f,0.0f,0.0f);	//Magnitude must not = 0!
+	FPControllerComponent *pDebugFPControl = new FPControllerComponent();
+	pDebugFPControl->setActivated(false);
+	pDebugFPControl->setRestricted(false);
+	pDebugCameraObj->addComponent(pDebugFPControl);
+
+	m_GameObjectList.push_back(pDebugCameraObj);
 	
 	/*// car
 	GameObject *pCar=m_ModelLoader.loadModelFromFile("Models/armoredrecon.fbx",m_pRenderer);

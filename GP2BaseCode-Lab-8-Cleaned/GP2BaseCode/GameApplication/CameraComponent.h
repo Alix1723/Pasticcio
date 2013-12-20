@@ -22,6 +22,7 @@ public:
 		m_View = XMMatrixIdentity();
 		m_Projection = XMMatrixIdentity();
 		m_AspectRatio = 800.0f/640.0f;
+		m_IsActivated = true;
 	};
 
 	~CameraComponent(){}; //Overrides from parent
@@ -34,12 +35,19 @@ private:
 	float m_AspectRatio;	//Aspect ratio of the displayed image
 	float m_NearClip;		//Near clipping distance
 	float m_FarClip;		//Far clipping distance
+	bool  m_IsActivated;		//Activation
 	XMMATRIX m_Projection;	//Projection matrix
 	XMMATRIX m_View;		//View matrix
 
 	//Methods
 public:
 	//Setters
+
+	void setActivation(bool active)
+	{
+		m_IsActivated = active;
+	}
+
 	void setLook(float x, float y, float z)
 	{
 		m_LookAt = XMFLOAT3(x,y,z);

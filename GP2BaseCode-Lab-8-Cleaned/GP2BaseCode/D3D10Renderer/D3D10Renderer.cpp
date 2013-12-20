@@ -55,6 +55,9 @@ D3D10Renderer::D3D10Renderer()
 {
 	m_pD3D10Device=NULL;
 	m_pRenderTargetView=NULL;
+	m_pPostFXRenderTexture = NULL;
+	m_pPostFXRenderView = NULL;
+	m_pPostFXShaderResView = NULL;
 	m_pSwapChain=NULL;
 	m_pDepthStencelView=NULL;
 	m_pDepthStencilTexture=NULL;
@@ -83,6 +86,12 @@ D3D10Renderer::~D3D10Renderer()
 		m_pDepthStencelView->Release();
 	if (m_pDepthStencilTexture)
 		m_pDepthStencilTexture->Release();
+	if (m_pPostFXRenderTexture)
+		m_pPostFXRenderTexture->Release();
+	if (m_pPostFXRenderView)
+		m_pPostFXRenderView->Release();
+	if (m_pPostFXShaderResView)
+		m_pPostFXShaderResView->Release();
 	if (m_pSwapChain)
 		m_pSwapChain->Release();
 	if (m_pD3D10Device)

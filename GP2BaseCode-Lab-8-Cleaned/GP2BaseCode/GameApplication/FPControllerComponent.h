@@ -11,6 +11,8 @@ class FPControllerComponent : public GameComponent
 public:
 	FPControllerComponent()
 	{
+		m_IsActivated = false;
+		m_IsRestricted = true;
 		m_SpeedMultiplier = 0.01;				
 		m_Accel = 0.01f;						
 		m_MouseSensitivity = 0.2f;				
@@ -29,9 +31,20 @@ public:
 	};
 	~FPControllerComponent(){};
 	void update(); //from parent
+	
+	void setActivated(bool active) //Change if this in use or not
+	{
+		m_IsActivated = active;
+	}							 
+	void setRestricted(bool restrict) //Change restriction
+	{
+		m_IsRestricted = restrict;
+	} 
 	XMVECTOR checkBoundaries(XMVECTOR position);	//Checking rectangular boundary
 
 private:
+	bool m_IsActivated;						//Is the FP controller currently being used?
+	bool m_IsRestricted;					//Is the movement bound by the boundary cuboid?
 	bool m_ControllerInput;					//Toggling between Mouse+Keyboard and Controller inputs
 
 	float m_SpeedMultiplier;				//How fast to move the camera around
