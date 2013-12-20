@@ -27,7 +27,7 @@ bool MyGame::initGame()
 	pMaterial->loadEffect("Effects/DirectionalLight.fx",m_pRenderer);
 	pMaterial->loadDiffuseTexture("Textures/cube1.png", m_pRenderer);
 	
-	OrbitalMovementComponent *pOrbMove = new OrbitalMovementComponent(2.0f, 0.0f, 0.0f, 0.0f, "z", 10, 0.0f, 0.0f, 0.0f);
+	OrbitalMovementComponent *pOrbMove = new OrbitalMovementComponent(1.0f, 0.0f, 2.0f, -2.0f, "z", 10, 0.0f, 0.0f, 0.0f);
 
 	GameObject *pTestObj=new GameObject();
 	pTestObj->setName("TestObject");
@@ -121,7 +121,7 @@ bool MyGame::initGame()
 		iter->second->addComponent(pMaterial);
 		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
 		pVisual->createVertexLayout(m_pRenderer);
-		//iter->second->getTransform().setPosition(4.0f, 0.0f, 0.0f);
+		iter->second->getTransform().setPosition(0.0f, -1.1f, 0.0f);
 	}
 	
 	m_GameObjectList.push_back(pParaCar);
@@ -153,8 +153,8 @@ bool MyGame::initGame()
 		iter->second->addComponent(pMaterial);
 		VisualComponent *pVisual=static_cast<VisualComponent*>(iter->second->getComponent("Visual"));
 		pVisual->createVertexLayout(m_pRenderer);
-		iter->second->getTransform().setScale(0.2f, 0.2f, 0.2f);
-		iter->second->getTransform().setPosition(0.0f, 5.0f, 0.0f);
+		iter->second->getTransform().setScale(0.4f, 0.4f, 0.4f);
+		iter->second->getTransform().setPosition(0.0f, 5.0f, -85.0f);
 	}
 	
 	m_GameObjectList.push_back(pEarth);
