@@ -25,6 +25,7 @@ CONTROLS
 --------
 
 Switch between Mouse+Keyboard input and 360 Controller input by pressing F1.
+Switch between normal and debug cameras with F2.
 
 Mouse and Keyboard
 
