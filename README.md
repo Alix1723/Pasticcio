@@ -11,7 +11,7 @@ Alasdair Gibson, S1111320
 
 Pascal Pflüger, S1346060
 
->Materials, Texturing and Model Loading
+>Materials, Texturing, Model Loading, Parallax Mapping and 'Orbital Movement'
 
 Alex Trevett, 
 
@@ -19,7 +19,7 @@ Alex Trevett,
 
 Peter Watt, S1112402
 
->Light and Directional light components
+>Light and Directional light components, Parallax Mapping
 
 CONTROLS
 --------
